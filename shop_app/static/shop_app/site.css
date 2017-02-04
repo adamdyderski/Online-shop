@@ -1,0 +1,63 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size:15px;
+    padding-top: 70px;
+}
+
+.navbar-brand{
+    font-family: 'Unica One', cursive;
+    font-size: 32px;
+}
+
+.brand-text{
+    font-family: 'Unica One', cursive;
+    font-size: 60px;
+}
+
+#header{
+    background-image: url('header-bg.jpg');
+    background-position: top center;
+    background-size: cover;
+    text-align: center;
+}
+
+#header h1, #header p{
+    color:#FFF;
+}
+
+.item{
+    padding: 10px;
+    text-align:center;
+}
+
+.item-img{
+    width:60%;
+}
+
+.item-cart, .item-cart:active, .item-cart:hover, .item-cart:focus{
+    display: inline-block;
+    padding: 15px 40px;
+    appearance: none;
+    box-shadow: none;
+    border-radius: 0;
+    background: #00AD7C;
+    color:#fff;
+    text-decoration: none;
+
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.item-cart:hover{
+    background: #009168;
+}
+
+.item-price{
+    margin-bottom: 30px;
+}
+
+footer{
+    padding:50px 0 50px 0;
+}
