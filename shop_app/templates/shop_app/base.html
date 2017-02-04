@@ -21,8 +21,8 @@
 
             <!-- Other CSS -->
             {% load staticfiles %}
-            <link rel="stylesheet" href="{% static 'shop_app/menu.css' %}">
-            <link rel="stylesheet" href="{% static 'shop_app/site.css' %}">
+            <link rel="stylesheet" href="{% static 'shop_app/css/menu.css' %}">
+            <link rel="stylesheet" href="{% static 'shop_app/css/site.css' %}">
 </head>
 
 <body>
@@ -37,11 +37,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">planet of posters</a>
+                    <a class="navbar-brand" href="{% url 'shop_app:home' %}">planet of posters</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">Home</a></li>
+                    <li><a href="{% url 'shop_app:home' %}">Home</a></li>
                     <li><a href="#">O nas</a></li>
                     <li><a href="#">Kontakt</a></li>
                 </ul>
