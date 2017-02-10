@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}planet of posters{% endblock %}</title>
+    <title>{% block title %}Planet Of Posters{% endblock %}</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -14,15 +14,13 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
-
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-            crossorigin="anonymous">
-
-            <!-- Other CSS -->
-            {% load staticfiles %}
-            <link rel="stylesheet" href="{% static 'shop_app/css/menu.css' %}">
-            <link rel="stylesheet" href="{% static 'shop_app/css/site.css' %}">
+    
+    <!-- Other CSS -->
+    {% load staticfiles %}
+    <link href="{% static 'shop_app/dist/css/flat-ui.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'shop_app/css/menu.css' %}">
+    <link rel="stylesheet" href="{% static 'shop_app/css/site.css' %}">
+    
 </head>
 
 <body>
@@ -37,7 +35,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{% url 'shop_app:home' %}">planet of posters</a>
+                    <a class="navbar-brand" href="{% url 'shop_app:home' %}">planet <span class="glyphicon glyphicon-globe brand-globe" aria-hidden="true"></span>f posters</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -46,7 +44,9 @@
                     <li><a href="#">Kontakt</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Logowanie / Rejestracja</a></li>
+                    {% if user.is_authenticated %}<li><a href="{% url 'accounts:password_change' %}">Zmień hasło</a></li>{% endif %}
+                    {% if user.is_authenticated %}<li><a href="{% url 'accounts:logout' %}">Wyloguj</a></li>{% endif %}
+                    {% if not user.is_authenticated %}<li><a href="{% url 'accounts:login' %}">Logowanie / Rejestracja</a></li>{% endif %}
                     <li><a href="#">Koszyk (1)</a></li>
                 </ul>
             </div>
@@ -69,7 +69,7 @@
 
     <!-- Content -->
     <div class="container">
-        {% block body %}{%endblock%}
+        {% block body %}HOME{%endblock%}
     </div>
     <!-- /content -->
 
