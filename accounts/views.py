@@ -3,10 +3,15 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from django.views.generic.edit import CreateView, View
+from django.views.generic.edit import UpdateView, View
 
 from accounts.forms import UserRegistration
 from accounts.models import User
+
+class UserUpdate(UpdateView):
+    model = User
+    fields = ['first_name','last_name', 'street', 'postcode', 'city', 'email' ,'phone']
+    template_name_suffix = '_update_form'
 
 
 def activate(request, activation_key):

@@ -1,12 +1,24 @@
 {% extends 'shop_app/base.html' %} 
 {% load bootstrap3 %} 
  
-{% block body %} 
+{% block body %}
 
-            <form method="post" action=""> 
-                {% csrf_token %} 
-                {% bootstrap_form form %}                
-                {% bootstrap_button "Zarejestruj" button_type="submit" button_class="btn-primary" %} 
-            </form>  
-        
+    <form method="post" action="">
+        div class="col-sm-8 col-sm-offset-2 text-center">
+                <h3>Rejestracja</h3>
+                <hr>
+            </div>
+            <div class="col-sm-6 col-sm-offset-3">
+                <h6 class="required">Dane użytkownika:</h6>
+                <p>
+                    {% bootstrap_field form.username show_help=False show_label=False %}
+                    {% bootstrap_field form.password1 show_label=False %}
+                    {% bootstrap_field form.password2 show_label=False %}
+                </p>
+        {% csrf_token %} 
+        {% bootstrap_form form %}                
+        {% bootstrap_button "Zarejestruj" button_type="submit" button_class="btn-primary" %} 
+    </form>
+
+    
 {% endblock %}

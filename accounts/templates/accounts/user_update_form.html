@@ -1,0 +1,39 @@
+{% extends 'shop_app/base.html' %}
+{% load bootstrap3 %}
+
+{% block body %}
+    
+    <form method="post">
+    {% csrf_token %}
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <h3>Mój profil</h3>
+                <hr>
+            </div>
+            
+            <div class="col-sm-5">
+                <h6>Dane osobowe:</h6>
+                <p>
+                    {% bootstrap_field form.first_name %}
+                    {% bootstrap_field form.last_name  %}
+                    {% bootstrap_field form.email %}
+                    {% bootstrap_field form.phone  %}
+                </p>
+            </div>           
+            <div class="col-sm-5 col-sm-offset-2">
+                <h6>Adres dostawy:</h6>
+                <p>
+                    {% bootstrap_field form.street %}
+                    {% bootstrap_field form.city %}
+                    {% bootstrap_field form.postcode %}
+                </p>
+            </div>
+            <div class="col-sm-12 padding-top-md">
+                <p class="text-center">
+                    {% bootstrap_button "Zapisz" button_type="submit" button_class="btn-primary" %}
+                </p>
+            </div>  
+        </div>
+    </form> 
+
+{% endblock %}

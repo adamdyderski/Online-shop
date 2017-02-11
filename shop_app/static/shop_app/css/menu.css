@@ -14,6 +14,22 @@
     border-bottom: 5px solid #1ABC9C;
 }
 
+.badge {
+    padding: 5px 10px 5px 10px;
+    background-color: #34495E;
+    margin-left:5px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+    transition: background .15s ease-in-out;
+    -moz-transition: background .15s ease-in-out;
+    -webkit-transition: background .15s ease-in-out;
+}
+
+navbar-default .navbar-nav>.active>a:hover .badge ,.navbar-default .navbar-nav>li>a:hover .badge , .navbar-default .navbar-nav>li>a:focus .badge {
+    background-color: #1ABC9C;
+}
+
 
 
 

@@ -29,4 +29,6 @@ urlpatterns = [
     url(r'^password_change/$', auth_views.password_change,{'template_name' : 'accounts/change/password_change_form.html','post_change_redirect' : '/accounts/password_change/done/'}, name='password_change'),
     url(r'^password_change/done/$', auth_views.password_change_done,{'template_name' : 'accounts/change/password_change_done.html'}, name='password_change_done'),
 
+    # Profil użytkownika
+    url(r'^profile/(?P<pk>[0-9]+)/$', views.UserUpdate.as_view(), name='profile'),
 ]
