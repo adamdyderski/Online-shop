@@ -10,11 +10,11 @@ urlpatterns = [
     # Rejestracja
 
     url(r'^activate/(?P<activation_key>[a-z0-9]+)/$', views.activate, name='activate'),
-    url(r'^registration/$', views.Registration.as_view(), name='registration'),
+    url(r'^registration/$', views.UserRegistration.as_view(), name='registration'),
     
     # Logowanie
 
-    url(r'^login/$', auth_views.login, name='login'),
+    url(r'^login/$', auth_views.login, {'template_name' : 'accounts/user_login_form.html'} , name='login'),
     url(r'^logout/$', auth_views.logout_then_login, name='logout'),
 
     # Reset hasła
@@ -30,5 +30,5 @@ urlpatterns = [
     url(r'^password_change/done/$', auth_views.password_change_done,{'template_name' : 'accounts/change/password_change_done.html'}, name='password_change_done'),
 
     # Profil użytkownika
-    url(r'^profile/(?P<pk>[0-9]+)/$', views.UserUpdate.as_view(), name='profile'),
+    url(r'^profile/$', views.UserUpdate.as_view(), name='profile'),
 ]

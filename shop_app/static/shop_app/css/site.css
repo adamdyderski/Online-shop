@@ -8,6 +8,9 @@ body {
 /*
     Other
 */
+h6 + p{
+    padding-top: 10px;
+}
 
 .padding-top-md{
     padding-top: 30px;

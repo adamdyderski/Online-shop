@@ -2,37 +2,39 @@
 {% load bootstrap3 %}
 
 {% block body %}
-    
-    <form method="post">
+
+    <form method="post" class="form-horizontal">
     {% csrf_token %}
         <div class="row">
-            <div class="col-sm-8 col-sm-offset-2 text-center">
+
+            <div class="col-sm-10 col-sm-offset-1 text-center">
                 <h3>Mój profil</h3>
                 <hr>
+                {% bootstrap_messages %}
             </div>
-            
-            <div class="col-sm-5">
-                <h6>Dane osobowe:</h6>
+
+            <div class="col-sm-6 col-sm-offset-3">  
+                <h6>Twoje dane:</h6>
                 <p>
-                    {% bootstrap_field form.first_name %}
-                    {% bootstrap_field form.last_name  %}
-                    {% bootstrap_field form.email %}
-                    {% bootstrap_field form.phone  %}
+                    {% bootstrap_field form.first_name layout='horizontal' %}
+                    {% bootstrap_field form.last_name  layout='horizontal'%}
+                    {% bootstrap_field form.email layout='horizontal'%}
+                    {% bootstrap_field form.phone  layout='horizontal'%}
                 </p>
-            </div>           
-            <div class="col-sm-5 col-sm-offset-2">
-                <h6>Adres dostawy:</h6>
+                <h6 class="padding-top-md">Dane adresowe:</h6>
                 <p>
-                    {% bootstrap_field form.street %}
-                    {% bootstrap_field form.city %}
-                    {% bootstrap_field form.postcode %}
+                    {% bootstrap_field form.street layout='horizontal' %}
+                    {% bootstrap_field form.city layout='horizontal'%}
+                    {% bootstrap_field form.postcode layout='horizontal'%}
                 </p>
             </div>
-            <div class="col-sm-12 padding-top-md">
-                <p class="text-center">
+
+            <div class="col-sm-6 col-sm-offset-3 padding-top-md text-center">
+                <p>
                     {% bootstrap_button "Zapisz" button_type="submit" button_class="btn-primary" %}
                 </p>
-            </div>  
+            </div> 
+
         </div>
     </form> 
 

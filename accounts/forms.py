@@ -5,7 +5,7 @@ from django.core.validators import RegexValidator
 from accounts.models import User
 
 
-class UserRegistration(UserCreationForm):
+class RegistrationFrom(UserCreationForm):
 
     rules = forms.BooleanField(required=True, initial=False, widget=forms.CheckboxInput(attrs={'class':'custom-checkbox', 'data-toogle':'checkbox'}))
     

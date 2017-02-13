@@ -1,17 +1,23 @@
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.views.generic.edit import UpdateView, View
 
-from accounts.forms import UserRegistration
+from accounts.forms import RegistrationFrom
 from accounts.models import User
 
-class UserUpdate(UpdateView):
+
+class UserUpdate(SuccessMessageMixin, UpdateView):
     model = User
     fields = ['first_name','last_name', 'street', 'postcode', 'city', 'email' ,'phone']
     template_name_suffix = '_update_form'
+    success_message = 'Twoje dane zostały zaktualizowane!'
+
+    def get_object(self, queryset=None): 
+        return self.request.user
 
 
 def activate(request, activation_key):
@@ -29,15 +35,16 @@ def activate(request, activation_key):
 
     return HttpResponseRedirect('/accounts/login') 
 
-class Registration(View):
-    template_name = 'registration/registration.html'
+
+class UserRegistration(View):
+    template_name = 'accounts/user_registration_form.html'
 
     def get(self, request, *args, **kwargs):
-        form = UserRegistration()
+        form = RegistrationFrom()
         return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
-        form = UserRegistration(request.POST)
+        form = RegistrationFrom(request.POST)
 
         if form.is_valid():
             user = form.save()
