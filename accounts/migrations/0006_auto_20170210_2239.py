@@ -13,9 +13,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
-            model_name='user',
-            name='activation_key',
-            field=models.CharField(default=accounts.models.get_activation_key, max_length=40, verbose_name='Kod aktywacyjny (SHA1)'),
-        ),
+        
     ]

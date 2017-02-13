@@ -9,7 +9,7 @@ urlpatterns = [
 
     # Rejestracja
 
-    url(r'^activate/(?P<activation_key>[a-z0-9]+)/$', views.activate, name='activate'),
+    url(r'^activate/(?P<activation_key>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/$', views.activate, name='activate'),
     url(r'^registration/$', views.UserRegistration.as_view(), name='registration'),
     
     # Logowanie

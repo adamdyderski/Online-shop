@@ -13,7 +13,15 @@ class RegistrationFrom(UserCreationForm):
         model = User
         fields = ('username', 'password1', 'password2', 'first_name',
                   'last_name', 'street', 'postcode', 'city', 'email', 'phone')
-
+    
+    def save(self, commit=True): 
+        user = super(RegistrationFrom, self).save(commit=False) 
+        # wymagana aktywacja konta poprzez link aktywacyjny
+        user.is_active = False
+        if commit: 
+            user.save()
+        return user
+    
     # def clean_email(self):
     #     email = self.cleaned_data.get('email')
 
