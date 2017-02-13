@@ -24,4 +24,4 @@ class User(AbstractUser):
     activation_key = models.UUIDField(default=uuid.uuid1, unique=True, editable=False)
 
     def get_absolute_url(self):
-        return reverse('accounts:profile', args=[str(self.pk)])
+        return reverse('accounts:profile')
