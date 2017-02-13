@@ -137,3 +137,8 @@ EMAIL_HOST_PASSWORD = 'planet1234'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'planetofposters@gmail.com'
+
+# PHOTOS
+
+MEDIA_ROOT = os.path.join( BASE_DIR, 'media')
+MEDIA_URL = '/media/'
