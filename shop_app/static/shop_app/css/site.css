@@ -1,18 +1,43 @@
 body {
     font-family: 'Roboto', sans-serif;
-    font-size:15px;
+    font-size: 15px;
     padding-top: 70px;
 }
 
-.navbar-brand{
-    font-family: 'Unica One', cursive;
-    font-size: 32px;
+
+/*
+    Other
+*/
+h6 + p{
+    padding-top: 10px;
 }
 
-.brand-text{
-    font-family: 'Unica One', cursive;
-    font-size: 60px;
+.padding-top-md{
+    padding-top: 30px;
 }
+
+.required::before{
+    content: "* ";
+    color:#E74C3C;
+}
+
+/*
+    Nav
+*/
+
+.navbar-brand{
+    font-family: 'Unica One', cursive;
+    font-size: 22px;
+}
+
+.brand-globe{
+    vertical-align: middle;
+    font-size: 27px;
+}
+
+/*
+    Header
+*/
 
 #header{
     background-image: url('../img/header-bg.jpg');
@@ -25,6 +50,10 @@ body {
     color:#FFF;
 }
 
+/*
+    Item
+*/
+
 .item{
     padding: 10px;
     text-align:center;
@@ -33,31 +62,37 @@ body {
 .item-img{
     width:60%;
 }
-
-.item-cart, .item-cart:active, .item-cart:hover, .item-cart:focus{
-    display: inline-block;
-    padding: 15px 40px;
-    appearance: none;
-    box-shadow: none;
-    border-radius: 0;
-    background: #00AD7C;
-    color:#fff;
-    text-decoration: none;
-
-    -webkit-transition: all 0.2s ease-in-out;
-    -moz-transition: all 0.2s ease-in-out;
-    -o-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
-}
-
-.item-cart:hover{
-    background: #009168;
-}
-
 .item-price{
     margin-bottom: 30px;
 }
 
+/*
+    Footer
+*/
+
 footer{
+    margin-top:50px;
     padding:50px 0 50px 0;
+}
+
+/*
+    FLAT UI Alerts
+*/
+
+.alert {
+  border-radius: 2px;
+  border: 0;
+  color: #fff;
+}
+
+.alert-info {
+  background-color: #3498db;
+}
+
+.alert-success {
+  background-color: #2ecc71;
+}
+
+.alert-danger {
+  background-color: #e74c3c;
 }
