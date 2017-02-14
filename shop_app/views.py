@@ -12,6 +12,11 @@ class Home(ListView):
     context_object_name = "products"
     template_name = "shop_app/home.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(Home, self).get_context_data(**kwargs)
+        context['random'] = Product.objects.order_by('?')[:3]  
+        return context
+
 
 class ProductDetails(DetailView, FormMixin):
     model = Product
