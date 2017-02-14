@@ -21,6 +21,9 @@ h6 + p{
     color:#E74C3C;
 }
 
+.details-site col-sm-3 {
+    font-weight: bold;
+}
 /*
     Nav
 */
@@ -62,6 +65,11 @@ h6 + p{
 .item-img{
     width:65%;
 }
+
+.item-img-big{
+    width:80%;
+}
+
 .item-price{
     margin-bottom: 30px;
 }

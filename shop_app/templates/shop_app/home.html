@@ -12,7 +12,7 @@
 
             {% for product in products %}
             <div class="col-sm-4 item">
-                <p><img src="{{ product.image.url }}" class="item-img"></p>
+                <p><a href="{% url 'shop_app:details' product.pk %}"><img src="{{ product.image.url }}" class="item-img"></a></p>
                 <p class="item-desc">{{ product.name }}</p>
                 <p class="item-price">{{ product.price }} zł</p>
                 <p>{% bootstrap_button "Do koszyka" button_type="submit" button_class="btn-primary" %}</p>
