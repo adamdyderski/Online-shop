@@ -4,5 +4,5 @@ from . import views
 app_name = 'shop_app'
 
 urlpatterns = [
-    url(r'^$', views.home, name='home')
+    url(r'^$', views.Home.as_view(), name='home')
 ]

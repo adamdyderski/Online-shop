@@ -1,0 +1,24 @@
+{% extends 'shop_app/base.html' %}
+{% load bootstrap3 %}
+
+{% block body %}
+
+        <div class="row">
+
+            <div class="col-sm-12">
+                <h3>Wszystkie plakaty</h3>
+                <hr>
+            </div>
+
+            {% for product in products %}
+            <div class="col-sm-4 item">
+                <p><img src="{{ product.image.url }}" class="item-img"></p>
+                <p class="item-desc">{{ product.name }}</p>
+                <p class="item-price">{{ product.price }} zł</p>
+                <p>{% bootstrap_button "Do koszyka" button_type="submit" button_class="btn-primary" %}</p>
+            </div>
+            {% endfor %}
+
+        </div>
+
+{% endblock %}
