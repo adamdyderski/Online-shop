@@ -22,7 +22,12 @@
             <div class="col-sm-12">
                 <h3>Wszystkie plakaty</h3>
                 <hr>
+
+                <form method="GET" action="" class="form-horizontal col-sm-3 col-sm-offset-9">
+                    {% bootstrap_form orderby layout='horizontal' %}
+                </form>
             </div>
+
 
             {% for product in products %}
             <div class="col-sm-4 item">

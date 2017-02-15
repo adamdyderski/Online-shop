@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
 
-from .forms import AddToCartForm
+from .forms import AddToCartForm, OrderbyForm
 from .models import Product
 
 
@@ -14,8 +14,13 @@ class Home(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(Home, self).get_context_data(**kwargs)
-        context['random'] = Product.objects.order_by('?')[:3]  
+        context['random'] = Product.objects.order_by('?')[:3]
+        context['orderby'] = OrderbyForm(initial=self.request.GET)
         return context
+
+    def get_queryset(self):
+        order = self.request.GET.get('orderby', 'name')
+        return Product.objects.order_by(order)
 
 
 class ProductDetails(DetailView, FormMixin):
