@@ -40,19 +40,20 @@
                     </div>
                 </div>
   
-                
-                <form method="post" action="" class="form-horizontal">
-                    {% csrf_token %}
-                    <div class="row padding-top-md">
-                            <div class="col-sm-3">
-                                {% bootstrap_form form layout='horizontal' %}
-                            </div>
+                {% if product.quantity %}
+                    <form method="post" action="" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="row padding-top-md">
+                                <div class="col-sm-3">
+                                    {% bootstrap_form form layout='horizontal' %}
+                                </div>
 
-                            <div class="col-sm-9">
-                                {% bootstrap_button "Do koszyka" button_type="submit" button_class="btn-primary" %}
-                            </div>
-                    </div>
-                </form>
+                                <div class="col-sm-9">
+                                    {% bootstrap_button "Do koszyka" button_type="submit" button_class="btn-primary" %}
+                                </div>
+                        </div>
+                    </form>
+                {% endif %}
 
             </div>
 
