@@ -7,7 +7,7 @@ from accounts.models import User
 
 class RegistrationFrom(UserCreationForm):
 
-    rules = forms.BooleanField(required=True, initial=False, widget=forms.CheckboxInput(attrs={'class':'custom-checkbox', 'data-toogle':'checkbox'}))
+    rules = forms.BooleanField(required=True, initial=False, widget=forms.CheckboxInput(attrs={'data-toggle':'checkbox'}))
     
     class Meta:
         model = User
