@@ -6,20 +6,6 @@
         <div class="row">
 
             <div class="col-sm-12">
-                <h3>Losowe plakaty</h3>
-                <hr>
-            </div>
-
-            {% for product in random %}
-            <div class="col-sm-4 item">
-                <p><a href="{% url 'shop_app:details' product.pk %}"><img src="{{ product.image.url }}" class="item-img"></a></p>
-                <p class="item-desc">{{ product.name }}</p>
-                <p class="item-price">{{ product.price }} zł</p>
-                <p>{% bootstrap_button "Do koszyka" button_type="submit" button_class="btn-primary" %}</p>
-            </div>
-            {% endfor %}
-
-            <div class="col-sm-12">
                 <h3>Wszystkie plakaty</h3>
                 <hr>
 
@@ -30,6 +16,20 @@
 
 
             {% for product in products %}
+            <div class="col-sm-4 item">
+                <p><a href="{% url 'shop_app:details' product.pk %}"><img src="{{ product.image.url }}" class="item-img"></a></p>
+                <p class="item-desc">{{ product.name }}</p>
+                <p class="item-price">{{ product.price }} zł</p>
+                <p>{% bootstrap_button "Do koszyka" button_type="submit" button_class="btn-primary" %}</p>
+            </div>
+            {% endfor %}
+
+            <div class="col-sm-12">
+                <h3>A może... ?</h3>
+                <hr>
+            </div>
+
+            {% for product in random %}
             <div class="col-sm-4 item">
                 <p><a href="{% url 'shop_app:details' product.pk %}"><img src="{{ product.image.url }}" class="item-img"></a></p>
                 <p class="item-desc">{{ product.name }}</p>
