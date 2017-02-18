@@ -8,9 +8,8 @@ from .models import Product
 
 
 class Home(ListView):
-    model = Product
     context_object_name = "products"
-    template_name = "shop_app/home.html"
+    template_name = "shop_app/products_list.html"
 
     def get_context_data(self, **kwargs):
         context = super(Home, self).get_context_data(**kwargs)
@@ -20,7 +19,7 @@ class Home(ListView):
 
     def get_queryset(self):
         order = self.request.GET.get('orderby', 'name')
-        return Product.objects.order_by(order)
+        return Product.objects.filter(quantity__gt=0).order_by(order)
 
 
 class ProductDetails(DetailView, FormMixin):
