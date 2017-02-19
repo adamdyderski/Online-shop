@@ -20,24 +20,18 @@
                 <hr>
             </div>
 
-            {% if products %}
-
-                {% for product in products %}
+            {% for product in products %}
                 <div class="col-sm-4 item">
                     <p><a href="{% url 'shop_app:details' product.pk %}"><img src="{{ product.image.url }}" class="item-img"></a></p>
                     <p class="item-desc">{{ product.name }}</p>
                     <p class="item-price">{{ product.price }} zł</p>
                     <p><a href="{% url 'shop_app:details' product.pk %}" class="btn btn-primary">Zobacz</a></p>                  
                 </div>
-                {% endfor %}
-
-            {% else %}
-
+            {% empty %}
                 <div class="col-sm-12 text-center">
                     {% bootstrap_alert "Chwilowy brak produktów w tej kategorii, sprawdź wkrótce!" alert_type='info' %}
-                </div>
-
-            {% endif %}
+                 </div>
+            {% endfor %}    
 
             <div class="col-sm-12">
                 <h3>A może... ?</h3>
