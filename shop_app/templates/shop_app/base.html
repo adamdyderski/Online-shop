@@ -45,7 +45,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Kategorie <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             {% for category in categories %}
-                            <li><a href="{% url 'shop_app:home' %}">{{ category.name }}</a></li>
+                            <li><a href="{% url 'shop_app:category' category.pk %}">{{ category.name }}</a></li>
                             {% endfor %}
                         </ul>
                     </li>

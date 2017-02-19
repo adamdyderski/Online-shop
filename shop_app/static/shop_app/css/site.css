@@ -24,6 +24,12 @@ h6 + p{
 .details-site col-sm-3 {
     font-weight: bold;
 }
+
+.bottom-column
+{
+    padding-top: 35px;
+}
+
 /*
     Nav
 */
