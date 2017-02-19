@@ -1,10 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import DetailView, ListView
 from django.views.generic.edit import FormMixin
 
 from .forms import AddToCartForm, OrderbyForm
-from .models import Product,Category
+from .models import Category, Product
 
 
 class List(ListView):
@@ -14,17 +14,19 @@ class List(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(List, self).get_context_data(**kwargs)
-        context['random_products'] = Product.objects.filter(quantity__gt=0).order_by('?')[:3]
+        context['random_products'] = self.get_random_products(3)
         context['orderby_form'] = OrderbyForm(initial=self.request.GET)
         context['title'] = self.get_title()
         return context
+
+    def get_random_products(self, n):
+        return self.model.objects.filter(quantity__gt=0).order_by('?')[:n]
     
-    def get_title(self):
+    def get_title(self, title="Wszystkie"):     
         if self.kwargs.get('category_pk'):
-            title = Category.objects.get(id=self.kwargs['category_pk'])
-            return 'Kategoria: {}'.format(title.name)
-        else:
-            return 'Wszytskie'
+            c = Category.objects.get(id=self.kwargs['category_pk'])
+            title = 'Kategoria: {}'.format(c)
+        return title
 
     def get_queryset(self):
         order = self.request.GET.get('orderby', 'name')
@@ -32,7 +34,6 @@ class List(ListView):
         # filtr kategoria
         if self.kwargs.get('category_pk'):
             qs = qs.filter(category=self.kwargs['category_pk'])
-
         return qs
 
 class Details(DetailView, FormMixin):
@@ -48,5 +49,3 @@ class Details(DetailView, FormMixin):
         context = super(Details, self).get_context_data(**kwargs)
         context['availability'] = self.availability()
         return context
-    
-    
