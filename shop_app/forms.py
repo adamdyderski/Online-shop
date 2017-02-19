@@ -10,4 +10,4 @@ class OrderbyForm(forms.Form):
        ('price', 'cena rosnąco'),
        ('-price', 'cena malejąco'),
    )
-   orderby = forms.ChoiceField(label='Sortuj',choices=choices, widget=forms.Select(attrs={'onchange': 'this.form.submit();', 'data-toggle':'select','class':'select select-default'}))
+   orderby = forms.ChoiceField(label='Sortuj wg',choices=choices, widget=forms.Select(attrs={'onchange': 'this.form.submit();', 'data-toggle':'select','class':'select select-default'}))
