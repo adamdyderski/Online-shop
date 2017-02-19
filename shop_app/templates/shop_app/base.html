@@ -110,10 +110,15 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
-
+    
+    <!-- Flat UI -->
     <script src="{% static 'shop_app/dist/js/vendor/jquery.min.js' %}"></script>
     <script src="{% static 'shop_app/dist/js/flat-ui.min.js' %}"></script>
 
+    <!-- Elevatezoom -->
+    <script src="{% static 'shop_app/js/jquery.elevatezoom.js' %}"></script>
+
+    
     <script>
       $(document).ready(function(){
         // Custom Selects
@@ -122,6 +127,13 @@
         }
         // Checkboxes and Radio buttons
         $('[data-toggle="checkbox"]').radiocheck();
+
+        $(".zoom").elevateZoom({
+            zoomType: "inner",
+            cursor: "crosshair",
+            scrollZoom : true
+        });
+
         });
     </script>
     
