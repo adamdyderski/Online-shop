@@ -16,6 +16,10 @@ h6 + p{
     padding-top: 30px;
 }
 
+.padding-bottom-md{
+    padding-bottom: 30px;
+}
+
 .required::before{
     content: "* ";
     color:#E74C3C;
@@ -30,18 +34,25 @@ h6 + p{
     padding-top: 35px;
 }
 
+.btn{
+    font-size: 13px;
+    padding: 13px 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
 /*
     Nav
 */
 
 .navbar-brand{
     font-family: 'Unica One', cursive;
-    font-size: 22px;
+    font-size: 20px;
 }
 
 .brand-globe{
     vertical-align: middle;
-    font-size: 27px;
+    font-size: 25px;
 }
 
 /*
@@ -77,7 +88,7 @@ h6 + p{
 }
 
 .item-price{
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 /*
