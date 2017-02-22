@@ -68,10 +68,12 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'shop_app.context_processors.categories_processor'
             ],
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'shop.wsgi.application'
 
@@ -137,3 +139,8 @@ EMAIL_HOST_PASSWORD = 'planet1234'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'planetofposters@gmail.com'
+
+# PHOTOS
+
+MEDIA_ROOT = os.path.join( BASE_DIR, 'media')
+MEDIA_URL = '/media/'
