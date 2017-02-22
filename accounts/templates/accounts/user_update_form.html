@@ -1,0 +1,41 @@
+{% extends 'shop_app/base.html' %}
+{% load bootstrap3 %}
+
+{% block body %}
+
+    <form method="post" class="form-horizontal">
+    {% csrf_token %}
+        <div class="row">
+
+            <div class="col-sm-10 col-sm-offset-1 text-center">
+                <h3>Mój profil</h3>
+                <hr>
+                {% bootstrap_messages %}
+            </div>
+
+            <div class="col-sm-6 col-sm-offset-3">  
+                <h6>Twoje dane:</h6>
+                <p>
+                    {% bootstrap_field form.first_name layout='horizontal' %}
+                    {% bootstrap_field form.last_name  layout='horizontal'%}
+                    {% bootstrap_field form.email layout='horizontal'%}
+                    {% bootstrap_field form.phone  layout='horizontal'%}
+                </p>
+                <h6 class="padding-top-md">Dane adresowe:</h6>
+                <p>
+                    {% bootstrap_field form.street layout='horizontal' %}
+                    {% bootstrap_field form.city layout='horizontal'%}
+                    {% bootstrap_field form.postcode layout='horizontal'%}
+                </p>
+            </div>
+
+            <div class="col-sm-6 col-sm-offset-3 padding-top-md text-center">
+                <p>
+                    {% bootstrap_button "Zapisz" button_type="submit" button_class="btn-primary" %}
+                </p>
+            </div> 
+
+        </div>
+    </form> 
+
+{% endblock %}

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Planet Of Posters{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Unica+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    
+    <!-- Other CSS -->
+    {% load staticfiles %}
+    <link href="{% static 'shop_app/dist/css/flat-ui.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'shop_app/css/menu.css' %}">
+    <link rel="stylesheet" href="{% static 'shop_app/css/site.css' %}">
+    
+</head>
+
+<body>
+    <!-- Nav -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{% url 'shop_app:home' %}">planet <span class="glyphicon glyphicon-globe brand-globe" aria-hidden="true"></span>f posters</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'shop_app:home' %}">Home</a></li>
+            
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Kategorie <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            {% for category in categories %}
+                                <li><a href="{% url 'shop_app:category' category.pk %}">{{ category.name }}</a></li>
+                            {% endfor %}
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{% url 'shop_app:home' %}">Wszystkie</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="#">O nas</a></li>
+                    <li><a href="#">Kontakt</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    {% if user.is_authenticated %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Moje konto <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Zamówienia</a></li>
+                            <li><a href="{% url 'accounts:profile' %}">Mój profil</a></li>
+                            <li><a href="{% url 'accounts:password_change' %}">Zmień hasło</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{% url 'accounts:logout' %}">Wyloguj</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li><a href="{% url 'accounts:login' %}">Logowanie / Rejestracja</a></li>
+                    {% endif %}
+
+                    <li><a href="#">Koszyk <span class="badge">0</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!--/nav-->
+
+    <!-- Header -->
+    <div class="fluid-container">
+        <div class="jumbotron" id="header">
+            <div class="container">
+                <h1>Lorem ipsum</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla felis velit, vulputate elementum commodo ut,
+                    sollicitudin finibus risus. Duis rhoncus viverra erat non tincidunt. Phasellus auctor interdum vulputate.
+                    Morbi vitae maximus metus. Nulla vel felis a mauris iaculis interdum. </p>
+            </div>
+        </div>
+    </div>
+    <!-- /header -->
+
+    <!-- Content -->
+    <div class="container">
+        {% block body %}{%endblock%}
+    </div>
+    <!-- /content -->
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            © 2017 adam dyderski.
+        </div>
+    </footer>
+    <!-- /footer -->
+    
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    
+    <!-- Flat UI -->
+    <script src="{% static 'shop_app/dist/js/vendor/jquery.min.js' %}"></script>
+    <script src="{% static 'shop_app/dist/js/flat-ui.min.js' %}"></script>
+
+    <!-- Elevatezoom -->
+    <script src="{% static 'shop_app/js/jquery.elevatezoom.js' %}"></script>
+
+    
+    <script>
+      $(document).ready(function(){
+        // Custom Selects
+        if ($('[data-toggle="select"]').length) {
+            $('[data-toggle="select"]').select2();
+        }
+        // Checkboxes and Radio buttons
+        $('[data-toggle="checkbox"]').radiocheck();
+
+        $(".zoom").elevateZoom({
+            zoomType: "inner",
+            cursor: "crosshair",
+            scrollZoom : true
+        });
+
+        });
+    </script>
+    
+    
+</body>
+
+</html>

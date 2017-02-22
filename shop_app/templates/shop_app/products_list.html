@@ -1,0 +1,52 @@
+{% extends 'shop_app/base.html' %}
+{% load bootstrap3 %}
+
+{% block body %}
+
+        <div class="row">
+                
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h3>{{ title }}</h3>
+                    </div>
+
+                    <div class="col-sm-4 bottom-column">
+                        <form method="GET" action="" class="form-horizontal">
+                            {% bootstrap_form orderby_form layout='horizontal' %}
+                        </form>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+            {% for product in products %}
+                <div class="col-sm-4 item">
+                    <p><a href="{% url 'shop_app:details' product.pk %}"><img src="{{ product.image.url }}" class="item-img"></a></p>
+                    <p class="item-desc">{{ product.name }}</p>
+                    <p class="item-price">{{ product.price }} zł</p>
+                    <p><a href="{% url 'shop_app:details' product.pk %}" class="btn btn-primary">Zobacz</a></p>                  
+                </div>
+            {% empty %}
+                <div class="col-sm-12 text-center">
+                    {% bootstrap_alert "Chwilowy brak produktów w tej kategorii, sprawdź wkrótce!" alert_type='info' %}
+                 </div>
+            {% endfor %}    
+
+            <div class="col-sm-12">
+                <h3>A może... ?</h3>
+                <hr>
+            </div>
+
+            {% for product in random_products %}
+            <div class="col-sm-4 item">
+                <p><a href="{% url 'shop_app:details' product.pk %}"><img src="{{ product.image.url }}" class="item-img"></a></p>
+                <p class="item-desc">{{ product.name }}</p>
+                <p class="item-price">{{ product.price }} zł</p>
+                <p><a href="{% url 'shop_app:details' product.pk %}" class="btn btn-primary">Zobacz</a></p>
+            </div>
+            {% endfor %}
+
+        </div>
+
+{% endblock %}

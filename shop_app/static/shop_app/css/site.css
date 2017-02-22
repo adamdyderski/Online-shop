@@ -1,0 +1,123 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    padding-top: 70px;
+}
+
+
+/*
+    Other
+*/
+h6 + p{
+    padding-top: 10px;
+}
+
+.padding-top-md{
+    padding-top: 30px;
+}
+
+.padding-bottom-md{
+    padding-bottom: 30px;
+}
+
+.required::before{
+    content: "* ";
+    color:#E74C3C;
+}
+
+.details-site col-sm-3 {
+    font-weight: bold;
+}
+
+.bottom-column
+{
+    padding-top: 35px;
+}
+
+.btn{
+    font-size: 13px;
+    padding: 13px 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/*
+    Nav
+*/
+
+.navbar-brand{
+    font-family: 'Unica One', cursive;
+    font-size: 20px;
+}
+
+.brand-globe{
+    vertical-align: middle;
+    font-size: 25px;
+}
+
+/*
+    Header
+*/
+
+#header{
+    background-image: url('../img/header-bg.jpg');
+    background-position: top center;
+    background-size: cover;
+    text-align: center;
+}
+
+#header h1, #header p{
+    color:#FFF;
+}
+
+/*
+    Item
+*/
+
+.item{
+    padding: 10px;
+    text-align:center;
+}
+
+.item-img{
+    width:65%;
+}
+
+.item-img-big{
+    width:75%;
+}
+
+.item-price{
+    margin-bottom: 25px;
+}
+
+/*
+    Footer
+*/
+
+footer{
+    margin-top:50px;
+    padding:50px 0 50px 0;
+}
+
+/*
+    FLAT UI Alerts
+*/
+
+.alert {
+  border-radius: 2px;
+  border: 0;
+  color: #fff;
+}
+
+.alert-info {
+  background-color: #3498db;
+}
+
+.alert-success {
+  background-color: #2ecc71;
+}
+
+.alert-danger {
+  background-color: #e74c3c;
+}

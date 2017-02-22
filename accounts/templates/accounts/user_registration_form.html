@@ -1,0 +1,54 @@
+{% extends 'shop_app/base.html' %}
+{% load bootstrap3 %}
+
+{% block body %}
+     
+    {% if not user.is_authenticated %}
+    
+    <form method="post" class="form-horizontal">
+    {% csrf_token %}
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1 text-center">
+                <h3>Rejestracja</h3>
+                <hr>
+            </div>
+            <div class="col-sm-6 col-sm-offset-3">
+                <h6 class="required">Dane użytkownika:</h6>
+                <p>
+                    {% bootstrap_field form.username layout='horizontal' show_help=False %}
+                    {% bootstrap_field form.password1 layout='horizontal' %}
+                    {% bootstrap_field form.password2 layout='horizontal' %}
+                </p>
+                <h6 class="required padding-top-md">Twoje dane:</h6>
+                <p>
+                    {% bootstrap_field form.first_name layout='horizontal' %}
+                    {% bootstrap_field form.last_name layout='horizontal' %}
+                    {% bootstrap_field form.email layout='horizontal' %}
+                    {% bootstrap_field form.phone layout='horizontal' %}
+                </p>
+                <h6 class="required padding-top-md">Dane adresowe:</h6>
+                <p>
+                    {% bootstrap_field form.street layout='horizontal' %}
+                    {% bootstrap_field form.city layout='horizontal' %}
+                    {% bootstrap_field form.postcode layout='horizontal' %}
+                </p>
+                
+                <div class="col-sm-offset-3 padding-top-md">
+                    <label class="checkbox checkbox-inline required">
+                        {{ form.rules }} Akceptuję <a href="">regulamin</a> sklepu
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-sm-12 text-center padding-top-md">
+                <p>
+                   {% bootstrap_button "Zarejestruj" button_type="submit" button_class="btn-success btn-lg" name="registration" %}
+                </p>                     
+            </div>
+        </div>
+
+    </form>
+    {% else %}
+        <div class="alert alert-info" role="alert">Jesteś zalogowany jako <strong>{{ user.username }}</strong>!</div>
+    {% endif %}
+{% endblock %}
