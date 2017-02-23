@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'shop_app.apps.ShopAppConfig',
     'accounts.apps.AccountsConfig',
+    'cart.apps.CartConfig',
     'bootstrap3',
 ]
 
