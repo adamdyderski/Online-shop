@@ -91,6 +91,19 @@ h6 + p{
     margin-bottom: 25px;
 }
 
+.item-cart-img{
+    width:60px;
+}
+
+/*
+    Table
+*/
+
+.table > tbody > tr > td, .table > thead > tr > th {
+    text-align: center;
+    vertical-align: middle;
+}
+
 /*
     Footer
 */

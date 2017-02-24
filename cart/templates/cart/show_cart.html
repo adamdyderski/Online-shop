@@ -1,18 +1,42 @@
 {% extends 'shop_app/base.html' %} 
-{% load bootstrap3 %} 
+{% load bootstrap3 %}
+{% load cart_filters %} 
 
 {% block body %}
 
     <h3>Koszyk</h3>
     <hr>
 
-    {% for product in products %}
+    {% if products %}
 
         <p class="item-desc">{{ product.name }}</p>
-         
-  
-    {% empty %}
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>LP</th>
+                    <th>ZDJĘCIE</th>
+                    <th>NAZWA</th>
+                    <th>ILOŚĆ</th>
+                    <th>CENA</th>
+                    <th>USUŃ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="{% url 'shop_app:details' product.pk %}"><img src="{{ product.image.url }}" class="item-cart-img"></a></td>
+                        <td><a href="{% url 'shop_app:details' product.pk %}">{{ product.name }}</a></td>
+                        <td>{{ cart | get_quantity:product.pk }}</td>
+                        <td>{{ product.price }} zł</td>
+                        <td><i class="glyphicon glyphicon-remove-circle " aria-hidden="true"></i></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
         {% bootstrap_alert "Koszyk jest pusty!" alert_type='info' %}
-    {% endfor %}
+    {% endif %}
 
 {% endblock %}
