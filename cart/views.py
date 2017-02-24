@@ -40,4 +40,4 @@ class Show(View):
     def get(self, request, *args, **kwargs):
         cart = request.session.get('cart', {})
         products = Product.objects.filter(pk__in=cart)
-        return render(request, self.template_name, context={'products': products}) 
+        return render(request, self.template_name, context={'products': products, 'cart': cart}) 
