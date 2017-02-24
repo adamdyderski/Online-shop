@@ -24,10 +24,20 @@ def add(request, product_pk):
 
     return HttpResponseRedirect(reverse_lazy('shop_app:details', kwargs={'pk': product_pk}))
 
+def remove(request, product_pk):
+    cart = request.session.get('cart', {})
+    
+    if product_pk in cart:
+        del cart[product_pk]
+        request.session['cart'] = cart
+        messages.success(request, 'Usunięto z koszyka!')
+
+    return HttpResponseRedirect(reverse_lazy('cart:show'))
+
 class Show(View):
     template_name = 'cart/show_cart.html'
 
     def get(self, request, *args, **kwargs):
         cart = request.session.get('cart', {})
-        products = Product.objects.filter(pk__in=cart.keys())
+        products = Product.objects.filter(pk__in=cart)
         return render(request, self.template_name, context={'products': products}) 

@@ -96,13 +96,23 @@ h6 + p{
 }
 
 /*
-    Table
+    Cart
 */
 
 .table > tbody > tr > td, .table > thead > tr > th {
     text-align: center;
     vertical-align: middle;
 }
+
+.cart-remove{
+    color: #e74c3c;
+}
+
+.cart-remove:hover{
+    color: #c0392b;
+}
+
+
 
 /*
     Footer

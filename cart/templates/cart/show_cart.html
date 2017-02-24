@@ -6,6 +6,7 @@
 
     <h3>Koszyk</h3>
     <hr>
+    {% bootstrap_messages %}
 
     {% if products %}
 
@@ -30,7 +31,7 @@
                         <td><a href="{% url 'shop_app:details' product.pk %}">{{ product.name }}</a></td>
                         <td>{{ cart | get_quantity:product.pk }}</td>
                         <td>{{ product.price }} zł</td>
-                        <td><i class="glyphicon glyphicon-remove-circle " aria-hidden="true"></i></td>
+                        <td><a href="{% url 'cart:remove' product.pk %}" class="cart-remove" ><i class="glyphicon glyphicon-remove-circle" aria-hidden="true"></i></a></td>
                     </tr>
                 {% endfor %}
             </tbody>
