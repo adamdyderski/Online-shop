@@ -74,7 +74,7 @@
                     <li><a href="{% url 'accounts:login' %}">Logowanie / Rejestracja</a></li>
                     {% endif %}
 
-                    <li><a href="#">Koszyk <span class="badge">0</span></a></li>
+                    <li><a href="#">Koszyk <span class="badge">{{ cart_count }}</span></a></li>
                 </ul>
             </div>
         </div>

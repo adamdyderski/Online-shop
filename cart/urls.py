@@ -4,5 +4,5 @@ from . import views
 app_name = 'cart'
 
 urlpatterns = [
-    
+    url(r'^add/(?P<product_pk>[0-9]+)/$', views.add, name='add')
 ]
