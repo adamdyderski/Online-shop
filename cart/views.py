@@ -18,7 +18,7 @@ def add(request, product_pk):
             messages.info(request, 'Niestety, obecnie dostępnych sztuk: ' + str(product.quantity))
         else:
             cart = request.session.get('cart', {})
-            cart.update({product.pk:add_quantity})
+            cart[str(product.pk)] = add_quantity
             request.session['cart'] = cart
             messages.success(request, 'Dodano do koszyka!')
 
