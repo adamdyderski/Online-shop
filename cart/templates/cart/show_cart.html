@@ -1,6 +1,6 @@
-{% extends 'shop_app/base.html' %} 
+{% extends 'shop_app/base.html' %}
 {% load bootstrap3 %}
-{% load cart_filters %} 
+{% load cart_filters %}
 
 {% block body %}
 
@@ -21,14 +21,19 @@
                         <th>CENA</th>
                         <th>USUŃ</th>
                     </tr>
-                </thead>
+                    </thead>
                 <tbody>
                     {% for product in products %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
                             <td><a href="{% url 'shop_app:details' product.pk %}"><img src="{{ product.image.url }}" class="item-cart-img"></a></td>
                             <td><a href="{% url 'shop_app:details' product.pk %}">{{ product.name }}</a></td>
-                            <td>{{ cart | get_quantity:product.pk }}</td>
+                            <td class="col-sm-1">
+                                <form method="post" action="{% url 'cart:update' product.pk %}" class="form-horizontal">
+                                    {% csrf_token %}
+                                    <input type="number" name="quantity" value="{{ cart | get_quantity:product.pk }}" min="1" class="form-control" onchange="this.form.submit()">
+                                </form>
+                            </td>
                             <td>{{ product.price }} zł</td>
                             <td><a href="{% url 'cart:remove' product.pk %}" class="cart-remove" ><i class="glyphicon glyphicon-remove-circle" aria-hidden="true"></i></a></td>
                         </tr>
