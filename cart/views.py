@@ -9,7 +9,6 @@ from shop_app.models import Product
 
 
 def addOrUpdate(request, product_pk):
-
     if request.method == 'POST':
         cart = request.session.get('cart', {})
         product = get_object_or_404(Product, pk=product_pk)
@@ -42,9 +41,19 @@ def remove(request, product_pk):
 
 class Show(TemplateView):
     template_name = 'cart/show_cart.html'
+    cart = None
+    products = None
 
     def get_context_data(self, **kwargs):
         context = super(Show, self).get_context_data(**kwargs)
-        context['cart'] = cart = self.request.session.get('cart', {})
-        context['products'] = Product.objects.filter(pk__in=cart)
+        context['cart'] = self.cart = self.request.session.get('cart', {})
+        context['products'] = self.products = Product.objects.filter(pk__in=self.cart)
+        context['cart_price'] = self.cart_price()
         return context
+
+    def cart_price(self):
+        price = 0
+        for product in self.products:
+            # cena * ilość w koszyku
+            price += product.price * self.cart[str(product.pk)]
+        return price

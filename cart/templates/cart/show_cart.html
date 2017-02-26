@@ -41,6 +41,21 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="row padding-top-md">
+          <div class="col-sm-4">
+
+          </div>
+          <div class="col-sm-4">
+
+          </div>
+          <div class="col-sm-4 text-right">
+            <p>Razem: {{ cart_price }} zł</p>
+            <p>Koszt wysyłki: 10.00 zł</p>
+            <hr>
+            <h5>Do zapłaty: {{ cart_price }} zł</h5>
+          </div>
+        </div>
     {% else %}
         {% bootstrap_alert "Koszyk jest pusty!" alert_type='info' %}
     {% endif %}
