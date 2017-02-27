@@ -45,15 +45,11 @@ class ShowCart(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ShowCart, self).get_context_data(**kwargs)
-        # dane z sesji
-        context['cart'] = self.cart = self.request.session.get('cart', {})
-        context['shippingmethod'] = shippingmethod = int(self.request.session.get('shippingmethod', 1))
-        # dane z bazy
-        context['products'] = self.products = Product.objects.filter(pk__in=self.cart)
-        context['shipping_cost'] = shipping_cost = ShippingMethod.objects.get(pk=shippingmethod).price
-
         context['shippingmethodform'] = ShippingMethodForm(self.request)
 
+        context['cart'] = self.cart = self.request.session.get('cart', {})
+        context['products'] = self.products = Product.objects.filter(pk__in=self.cart)
+        context['shipping_cost'] = shipping_cost = self.get_shipping_cost()
         context['subtotal'] = self.cart_price()
         context['total'] = self.cart_price(shipping_cost)
         return context
@@ -62,6 +58,11 @@ class ShowCart(TemplateView):
         for product in self.products:
             price += product.price * self.cart[str(product.pk)]
         return price
+
+    def get_shipping_cost(self):
+        shipping_method_pk = int(self.request.session.get('shippingmethod', 1))
+        shipping_method = ShippingMethod.objects.get(pk=shipping_method_pk)
+        return shipping_method.price
 
 
 def set_shipping_method(request):
