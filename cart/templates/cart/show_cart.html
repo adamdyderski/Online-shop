@@ -43,17 +43,19 @@
         </div>
 
         <div class="row padding-top-md">
-          <div class="col-sm-4">
-
-          </div>
-          <div class="col-sm-4">
-
-          </div>
-          <div class="col-sm-4 text-right">
-            <p>Razem: {{ cart_price }} zł</p>
-            <p>Koszt wysyłki: 10.00 zł</p>
+          <div class="col-sm-6 ">
+            <h5>Wybierz:</h5>
             <hr>
-            <h5>Do zapłaty: {{ cart_price }} zł</h5>
+            <form method="POST" action="{% url 'cart:shipping_method' %}" class="form-horizontal">
+                {% csrf_token %}
+                {% bootstrap_form shippingmethodform layout='horizontal' %}
+            </form>
+          </div>
+          <div class="col-sm-4 col-sm-offset-2 text-right">
+            <p>Razem: {{ subtotal }} zł</p>
+            <p>Koszt wysyłki: {{ shipping_cost }} zł</p>
+            <hr>
+            <h5>Do zapłaty: {{ total }} zł</h5>
           </div>
         </div>
     {% else %}
