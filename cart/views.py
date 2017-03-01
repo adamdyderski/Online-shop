@@ -6,7 +6,7 @@ from django.views import View
 from django.views.generic import TemplateView
 
 from shop_app.models import Product
-from .models import ShippingMethod
+from .models import ShippingMethod, Order, OrderProduct
 from .forms import ShippingMethodForm
 
 def add_or_update(request, product_pk):
@@ -75,6 +75,27 @@ def set_shipping_method(request):
 
 def order(request):
     if request.user.is_authenticated():
+
+        # dane z koszyka
+        cart = request.session.get('cart', {})
+        shipping_method_pk = int(request.session.get('shippingmethod', 1))
+
+        # nowe zamównienie
+        order = Order()
+        order.user = request.user
+        order.shipping_method = ShippingMethod.objects.get(pk=shipping_method_pk)
+        order.total = 1
+        order.save()
+
+        # produkty
+
+        for key, value in cart.items():
+            order_product = OrderProduct()
+            order_product.order = order
+            order_product.product = Product.objects.get(pk=int(key))
+            order_product.quantity = value
+            order_product.save()
+
         return render(request, 'cart/order_confirmation.html')
     else:
         messages.info(request, 'Aby złożyć zamówienie, musisz się zalogować!')
