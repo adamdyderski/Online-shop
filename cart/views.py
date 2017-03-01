@@ -71,3 +71,11 @@ def set_shipping_method(request):
         messages.success(request, 'Sposób wysyłki został zmieniony!')
 
     return HttpResponseRedirect(reverse_lazy('cart:show'))
+
+
+def order(request):
+    if request.user.is_authenticated():
+        return render(request, 'cart/order_confirmation.html')
+    else:
+        messages.info(request, 'Aby złożyć zamówienie, musisz się zalogować!')
+        return HttpResponseRedirect(reverse_lazy('accounts:login'))
