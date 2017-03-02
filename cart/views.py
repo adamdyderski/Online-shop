@@ -92,17 +92,20 @@ def order(request):
             for key, value in cart.items():
                 op = OrderProduct()
                 op.order = order
-                op.product = p = Product.objects.get(pk=int(key))
+                op.product = Product.objects.get(pk=int(key))
                 op.quantity = value
                 op.clean()
                 op.save()
-
-                p.quantity -= value
-                p.save()
         except Exception as e:
             order.delete()
             messages.error(request, e)
             return HttpResponseRedirect(reverse_lazy('cart:show'))
+
+        # aktualizacja stanu magazynu
+        for op in OrderProduct.objects.filter(order=order):
+            p = op.product
+            p.quantity -= op.quantity
+            p.save()
 
         # wyczyszczenie sesji
         del request.session['cart']
@@ -110,7 +113,7 @@ def order(request):
         if 'shippingmethod' in request.session:
             del request.session['shippingmethod']
 
-        return render(request, 'cart/order_confirmation.html')
+        return HttpResponseRedirect(reverse_lazy('shop_app:home'))
     else:
         messages.info(request, 'Aby złożyć zamówienie, musisz się zalogować!')
         return HttpResponseRedirect(reverse_lazy('accounts:login'))
