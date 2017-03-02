@@ -53,7 +53,11 @@ class Order(models.Model):
 class OrderProduct(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="Zamówienie")
     product =  models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Produkt")
-    quantity = models.IntegerField(default=1, verbose_name="Ilość")
+    quantity = models.PositiveSmallIntegerField(default=1, verbose_name="Ilość")
 
     def __str__(self):
         return '[ {} ] - {} ({} szt.)'.format(self.product.pk ,self.product, self.quantity)
+
+    def clean(self):
+        if self.product.quantity < self.quantity:
+            raise ValueError('Wystąpił błąd! Stan magazynowy produktu: \'{}\' zmienił się. Dostępnych sztuk: {}'.format(self.product, self.product.quantity))

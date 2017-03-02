@@ -87,14 +87,28 @@ def order(request):
         order.total = 1
         order.save()
 
-        # produkty
+        # produkty do zamówienia
+        try:
+            for key, value in cart.items():
+                op = OrderProduct()
+                op.order = order
+                op.product = p = Product.objects.get(pk=int(key))
+                op.quantity = value
+                op.clean()
+                op.save()
 
-        for key, value in cart.items():
-            order_product = OrderProduct()
-            order_product.order = order
-            order_product.product = Product.objects.get(pk=int(key))
-            order_product.quantity = value
-            order_product.save()
+                p.quantity -= value
+                p.save()
+        except Exception as e:
+            order.delete()
+            messages.error(request, e)
+            return HttpResponseRedirect(reverse_lazy('cart:show'))
+
+        # wyczyszczenie sesji
+        del request.session['cart']
+
+        if 'shippingmethod' in request.session:
+            del request.session['shippingmethod']
 
         return render(request, 'cart/order_confirmation.html')
     else:
