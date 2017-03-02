@@ -18,6 +18,13 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Użytkownik")
     shipping_method = models.ForeignKey(ShippingMethod, on_delete=models.CASCADE, verbose_name="Sposób wysyłki")
     total = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Kwota zamówienia")
+    STATUS = (
+        (1, 'Oczekiwanie na realizację'),
+        (2, 'W trakcie realizacji'),
+        (3, 'Gotowe do wysyłki'),
+        (4, 'Wysłano'),
+    )
+    status = models.IntegerField(default=1, choices=STATUS)
 
     def products(self):
         products = OrderProduct.objects.filter(order=self.pk)
