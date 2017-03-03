@@ -8,6 +8,7 @@ from django.views.generic import TemplateView
 from shop_app.models import Product
 from .models import ShippingMethod, Order, OrderProduct
 from .forms import ShippingMethodForm
+from decimal import Decimal
 
 def add_or_update(request, product_pk):
     if request.method == 'POST':
@@ -46,23 +47,26 @@ class ShowCart(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ShowCart, self).get_context_data(**kwargs)
         context['shippingmethodform'] = ShippingMethodForm(self.request)
-
         context['cart'] = self.cart = self.request.session.get('cart', {})
-        context['products'] = self.products = Product.objects.filter(pk__in=self.cart)
-        context['shipping_cost'] = shipping_cost = self.get_shipping_cost()
-        context['subtotal'] = self.cart_price()
-        context['total'] = self.cart_price(shipping_cost)
+        context['products'] = self.products = self.get_cart_products()
+        context['shipping_cost'] = self.shipping_cost = self.get_shipping_cost()
+        context['subtotal'], context['total'] = self.get_cart_price()
         return context
 
-    def cart_price(self, price = 0):
+    def get_cart_price(self, subtotal = 0):
         for product in self.products:
-            price += product.price * self.cart[str(product.pk)]
-        return price
+            subtotal += product.price * self.cart[str(product.pk)]
+        total = subtotal + self.shipping_cost
+        self.request.session['total'] = str(total)
+        return subtotal, total
 
     def get_shipping_cost(self):
         shipping_method_pk = int(self.request.session.get('shippingmethod', 1))
         shipping_method = ShippingMethod.objects.get(pk=shipping_method_pk)
         return shipping_method.price
+
+    def get_cart_products(self):
+        return Product.objects.filter(pk__in=self.cart)
 
 
 def set_shipping_method(request):
@@ -74,17 +78,18 @@ def set_shipping_method(request):
 
 
 def order(request):
-    if request.user.is_authenticated():
 
+    if request.user.is_authenticated():
         # dane z koszyka
         cart = request.session.get('cart', {})
+        total = request.session.get('total', 0)
         shipping_method_pk = int(request.session.get('shippingmethod', 1))
 
         # nowe zamównienie
         order = Order()
         order.user = request.user
         order.shipping_method = ShippingMethod.objects.get(pk=shipping_method_pk)
-        order.total = 1
+        order.total = Decimal(request.session.get('total'))
         order.save()
 
         # produkty do zamówienia
@@ -109,6 +114,7 @@ def order(request):
 
         # wyczyszczenie sesji
         del request.session['cart']
+        del request.session['total']
 
         if 'shippingmethod' in request.session:
             del request.session['shippingmethod']
