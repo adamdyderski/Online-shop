@@ -18,14 +18,15 @@ def add_or_update(request, product_pk):
 
         if product.quantity < add_quantity:
             messages.info(request, 'Niestety, obecnie dostępnych sztuk: ' + str(product.quantity))
-        else:
+        elif add_quantity > 0 :
             if product_pk in cart:
                 messages.success(request, 'Zaktualizowano koszyk!')
             else:
                 messages.success(request, 'Dodano do koszyka!')
-
             cart[str(product.pk)] = add_quantity
             request.session['cart'] = cart
+        else:
+            messages.info(request, 'Podają poprawną ilość większą niż 0.')
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
