@@ -74,7 +74,7 @@
                     <li><a href="{% url 'accounts:login' %}">Logowanie / Rejestracja</a></li>
                     {% endif %}
 
-                    <li><a href="#">Koszyk <span class="badge">0</span></a></li>
+                    <li><a href="{% url 'cart:show' %}">Koszyk <span class="badge">{{ cart_count }}</span></a></li>
                 </ul>
             </div>
         </div>
@@ -83,13 +83,8 @@
 
     <!-- Header -->
     <div class="fluid-container">
-        <div class="jumbotron" id="header">
-            <div class="container">
-                <h1>Lorem ipsum</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla felis velit, vulputate elementum commodo ut,
-                    sollicitudin finibus risus. Duis rhoncus viverra erat non tincidunt. Phasellus auctor interdum vulputate.
-                    Morbi vitae maximus metus. Nulla vel felis a mauris iaculis interdum. </p>
-            </div>
+        <div class="header">
+            <div class="brand">planet <span class="glyphicon glyphicon-globe brand-globe" aria-hidden="true"></span>f posters</div>
         </div>
     </div>
     <!-- /header -->

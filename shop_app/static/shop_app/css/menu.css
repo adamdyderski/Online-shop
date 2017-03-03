@@ -5,19 +5,20 @@
     border-bottom:1px solid #E5E5E5;
 }
 
-.navbar-default .navbar-nav>.active>a,.navbar-default .navbar-nav>li>a, .navbar-default .navbar-nav>li>a { 
+.navbar-default .navbar-nav>.active>a,.navbar-default .navbar-nav>li>a, .navbar-default .navbar-nav>li>a {
     border-bottom: 5px solid #fff;
     font-size: 13px;
     text-transform: uppercase;
 }
 
-.navbar-default .navbar-nav>.active>a:hover,.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus { 
+.navbar-default .navbar-nav>.active>a:hover,.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
     border-bottom: 5px solid #1ABC9C;
 }
 
 .badge {
     padding: 5px 10px 5px 10px;
     background-color: #34495E;
+    margin-top: -0.1em;
     margin-left:5px;
     -webkit-border-radius: 9px;
     -moz-border-radius: 9px;
@@ -36,8 +37,3 @@
     text-align:center;
     text-transform: uppercase;
 }
-
-
-
-
-

@@ -59,15 +59,39 @@ h6 + p{
     Header
 */
 
-#header{
+.header{
     background-image: url('../img/header-bg.jpg');
-    background-position: top center;
+    background-position: center center;
     background-size: cover;
     text-align: center;
+    color:#FFF;
+	width:100%;
+	height:400px;
+	display: flex; 
+	justify-content: center;
+	align-items: center;
 }
 
-#header h1, #header p{
-    color:#FFF;
+.header .brand{
+    font-family: 'Unica One', cursive;
+    font-size: 80px;
+}
+
+.header .brand-globe{
+    vertical-align: middle;
+    font-size: 85px;
+}
+
+@media (max-width: 750px) {
+
+    .header .brand{
+        font-size: 40px;
+    }
+
+    .header .brand-globe{
+        font-size: 45px;
+    }
+
 }
 
 /*
@@ -91,6 +115,29 @@ h6 + p{
     margin-bottom: 25px;
 }
 
+.item-cart-img{
+    width:60px;
+}
+
+/*
+    Cart
+*/
+
+.table > tbody > tr > td, .table > thead > tr > th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.cart-remove{
+    color: #e74c3c;
+}
+
+.cart-remove:hover{
+    color: #c0392b;
+}
+
+
+
 /*
     Footer
 */
@@ -108,6 +155,7 @@ footer{
   border-radius: 2px;
   border: 0;
   color: #fff;
+  text-align: center;
 }
 
 .alert-info {

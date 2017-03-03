@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'shop_app.apps.ShopAppConfig',
     'accounts.apps.AccountsConfig',
+    'cart.apps.CartConfig',
     'bootstrap3',
 ]
 
@@ -68,7 +69,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'shop_app.context_processors.categories_processor'
+                'shop_app.context_processors.categories_processor',
+                'cart.context_processors.cart_processor',  
             ],
         },
     },
