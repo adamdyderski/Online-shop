@@ -8,7 +8,7 @@ class ShippingMethod(models.Model):
     days = models.IntegerField(verbose_name="Przewidywany czas dostawy (dni)")
 
     def __str__(self):
-        return '{} - {} zł ({} dni)'.format(self.name,self.price,self.days)
+        return '{} ({} dni)'.format(self.name, self.days)
 
     class Meta:
         verbose_name = "Sposób wysyłki"
