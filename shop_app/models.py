@@ -24,3 +24,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Produkt"
         verbose_name_plural = "Produkty"
+
+    def categories(self):
+        return ", ".join([c.name for c in self.category.all()])
+    categories.short_description = 'Kategorie'
