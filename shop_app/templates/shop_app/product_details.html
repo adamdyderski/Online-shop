@@ -1,4 +1,7 @@
-{% extends 'shop_app/base.html' %} {% load bootstrap3 %} {% block body %}
+{% extends 'shop_app/base.html' %}
+{% load bootstrap3 %}
+
+{% block body %}
 
 <div class="row">
 
@@ -11,6 +14,7 @@
 
         <h3>{{ product.name }}</h3>
         <hr>
+        {% bootstrap_messages %}
 
         <div class="row details-site">
             <div class="col-sm-3">
@@ -39,7 +43,7 @@
         </div>
 
         {% if product.quantity %}
-        <form method="post" action="" class="form-horizontal">
+        <form method="post" action="{% url 'cart:add' product.pk %}" class="form-horizontal">
             {% csrf_token %}
             <div class="row padding-top-md">
                 <div class="col-sm-3">

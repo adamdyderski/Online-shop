@@ -14,9 +14,11 @@ urlpatterns = [
     # Profil użytkownika
     url(r'^profile/$', login_required(views.UserUpdate.as_view()), name='profile'),
 
-    
+    # Zamówienia
+    url(r'^orders/$', login_required(views.MyOrders.as_view()), name='orders'),
+
     # DJANGO AUTH
-    
+
     # Logowanie
     url(r'^login/$', auth_views.login, {'template_name' : 'accounts/user_login_form.html'} , name='login'),
     url(r'^logout/$', auth_views.logout_then_login, name='logout'),

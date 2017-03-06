@@ -1,0 +1,75 @@
+{% extends 'shop_app/base.html' %}
+{% load bootstrap3 %}
+{% load cart_filters %}
+
+{% block body %}
+
+    <h3>Koszyk</h3>
+    <hr>
+    {% bootstrap_messages %}
+
+    {% if products %}
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>LP</th>
+                        <th>ZDJĘCIE</th>
+                        <th>NAZWA</th>
+                        <th>ILOŚĆ</th>
+                        <th>CENA</th>
+                        <th>USUŃ</th>
+                    </tr>
+                    </thead>
+                <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><a href="{% url 'shop_app:details' product.pk %}"><img src="{{ product.image.url }}" class="item-cart-img"></a></td>
+                            <td><a href="{% url 'shop_app:details' product.pk %}">{{ product.name }}</a></td>
+                            <td class="col-sm-1">
+                                <form method="post" action="{% url 'cart:update' product.pk %}" class="form-horizontal">
+                                    {% csrf_token %}
+                                    <input type="number" name="quantity" value="{{ cart | get_quantity:product.pk }}" min="1" class="form-control" onchange="this.form.submit()">
+                                </form>
+                            </td>
+                            <td>{{ product.price }} zł</td>
+                            <td><a href="{% url 'cart:remove' product.pk %}" class="cart-remove" ><i class="glyphicon glyphicon-remove-circle" aria-hidden="true"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row padding-top-md">
+
+          <div class="col-sm-6">
+            <h5>Wybierz:</h5>
+            <hr>
+            <form method="POST" action="{% url 'cart:shipping_method' %}" class="form-horizontal">
+                {% csrf_token %}
+                {% bootstrap_form shippingmethodform layout='horizontal' %}
+            </form>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <div class="col-sm-4 col-sm-offset-8 text-right">
+            <p>Razem: {{ subtotal }} zł</p>
+            <p>Koszt wysyłki: {{ shipping_cost }} zł</p>
+            <hr>
+            <h5>Do zapłaty: {{ total }} zł</h5>
+          </div>
+
+          <div class="col-sm-12 text-right padding-top-md">
+            <a href="{% url 'cart:order' %}" class="btn btn-success">Zamawiam</a>
+          </div>
+        </div>
+
+      </div>
+    {% else %}
+        {% bootstrap_alert "Koszyk jest pusty!" alert_type='info' %}
+    {% endif %}
+
+{% endblock %}
