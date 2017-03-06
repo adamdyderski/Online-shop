@@ -16,6 +16,10 @@ h6 + p{
     padding-top: 30px;
 }
 
+.padding-top-lg{
+    padding-top: 40px;
+}
+
 .padding-bottom-md{
     padding-bottom: 30px;
 }
@@ -39,6 +43,10 @@ h6 + p{
     padding: 13px 20px;
     letter-spacing: 0.5px;
     text-transform: uppercase;
+}
+
+.order-history-price{
+    font-size:20px;
 }
 
 /*
@@ -65,11 +73,11 @@ h6 + p{
     background-size: cover;
     text-align: center;
     color:#FFF;
-	width:100%;
-	height:400px;
-	display: flex; 
-	justify-content: center;
-	align-items: center;
+  	width:100%;
+  	height:400px;
+  	display: flex;
+  	justify-content: center;
+  	align-items: center;
 }
 
 .header .brand{
@@ -158,7 +166,7 @@ footer{
   text-align: center;
 }
 
-.alert-info {
+.alert-info{
   background-color: #3498db;
 }
 
@@ -168,4 +176,37 @@ footer{
 
 .alert-danger {
   background-color: #e74c3c;
+}
+
+
+/*
+    FLAT UI Panels
+*/
+
+.panel-heading a{
+  color:#34495e
+}
+
+.panel-info .panel-heading a, .panel-info .panel-heading a:hover, .panel-success .panel-heading a, .panel-success .panel-heading a{
+  color:white;
+}
+
+.panel-info .panel-heading{
+  color:white;
+  background-color: #3498db;
+  border-color: #3498db;
+}
+
+.panel-info{
+  border-color: #ddd;
+}
+
+.panel-success .panel-heading{
+  color:white;
+  background-color: #2ecc71;
+  border-color: #2ecc71;
+}
+
+.panel-success{
+  border-color: #ddd;
 }

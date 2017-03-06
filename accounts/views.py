@@ -6,9 +6,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.views.generic.edit import UpdateView, View
+from django.views.generic import TemplateView
 
 from accounts.forms import RegistrationFrom
 from accounts.models import User
+from cart.models import Order, OrderProduct
 
 
 class UserUpdate(SuccessMessageMixin, UpdateView):
@@ -17,7 +19,7 @@ class UserUpdate(SuccessMessageMixin, UpdateView):
     template_name_suffix = '_update_form'
     success_message = 'Twoje dane zostały zaktualizowane!'
 
-    def get_object(self, queryset=None): 
+    def get_object(self, queryset=None):
         return self.request.user
 
 
@@ -34,7 +36,7 @@ def activate(request, activation_key):
             user.save()
             messages.success(request, 'Gratulacje, Twoje konto zostało aktywowane!')
 
-    return HttpResponseRedirect('/accounts/login') 
+    return HttpResponseRedirect('/accounts/login')
 
 
 class UserRegistration(View):
@@ -57,3 +59,13 @@ class UserRegistration(View):
             return HttpResponseRedirect('/accounts/login')
 
         return render(request, self.template_name, {'form': form})
+
+
+class MyOrders(TemplateView):
+    template_name = 'accounts/my_orders.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(MyOrders, self).get_context_data(**kwargs)
+        context['orders'] = orders = Order.objects.filter(user=self.request.user).order_by('-pk')
+        context['orders_products'] = OrderProduct.objects.filter(order__in=orders)
+        return context
