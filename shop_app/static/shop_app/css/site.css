@@ -69,11 +69,11 @@ h6 + p{
     background-size: cover;
     text-align: center;
     color:#FFF;
-	width:100%;
-	height:400px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  	width:100%;
+  	height:400px;
+  	display: flex;
+  	justify-content: center;
+  	align-items: center;
 }
 
 .header .brand{
@@ -178,6 +178,14 @@ footer{
 /*
     FLAT UI Panels
 */
+
+.panel-heading a{
+  color:#34495e
+}
+
+.panel-info .panel-heading a, .panel-info .panel-heading a:hover, .panel-success .panel-heading a, .panel-success .panel-heading a{
+  color:white;
+}
 
 .panel-info .panel-heading{
   color:white;

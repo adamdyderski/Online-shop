@@ -1,64 +1,76 @@
 {% extends 'shop_app/base.html' %}
 {% load bootstrap3 %}
+{% load panel_heading %}
 
 {% block body %}
 
-    <h3>Moje zamówienia</h3>
-    <hr>
-    {% bootstrap_messages %}
+  <h3>Moje zamówienia</h3>
+  <hr>
+  {% bootstrap_messages %}
 
-    <div class="row">
+  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
-        <div class="col-sm-10">
-          
-          {% for order in orders %}
-            <div class="panel panel-info">
-              <div class="panel-heading">Zamówienie nr: {{ order.pk }}</div>
-              <div class="panel-body padding-top-lg">
+    {% for order in orders %}
 
-                <dl class="dl-horizontal">
-                  <dt>Dane dostawy:</dt>
-                  <dd>{{ order.user_info | linebreaksbr }}</dd>
-                </dl>
+      <div class="panel {{ order.status | color_panel_heading }}">
 
-                <dl class="dl-horizontal">
-                  <dt>Sposób wysyłki:</dt>
-                  <dd>{{ order.shipping_method }}</dd>
-                  <dt>Do zapłaty:</dt>
-                  <dd>{{ order.total }} zł</dd>
-                  <dt>Status:</dt>
-                  <dd>{{ order.get_status_display }}</dd>
-                </dl>
-              </div>
+        <div class="panel-heading" role="tab" id="heading{{ forloop.counter }}">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+              ZAMÓWIENIE NR {{ order.pk }} - {{ order.get_status_display }}
+            </a>
+        </div>
 
-              <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Zdjęcie</th>
-                        <th>Nazwa</th>
-                        <th>Ilość</th>
-                        <th>Cena</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for op in orders_products %}
-                      {% if op.order == order %}
-                        <tr>
-                          <td>{{ op.product.pk }}</td>
-                          <td><a href="{% url 'shop_app:details' op.product.pk %}"><img src="{{ op.product.image.url }}" class="item-cart-img"></a></td>
-                          <td><a href="{% url 'shop_app:details' op.product.pk %}">{{ op.product.name }}</a></td>
-                          <td>{{ op.quantity }}</td>
-                          <td>{{ op.product.price }} zł</td>
-                        </tr>
-                      {% endif%}
-                    {% endfor %}
-                  </tbody>
-              </table>
-            </div>
-            <hr>
-        {% endfor %}
+        <div id="collapse{{ forloop.counter }}" class="panel-collapse collapse {% if forloop.first %} in {% endif %}" role="tabpanel" aria-labelledby="heading{{ forloop.counter }}">
+
+          <div class="panel-body">
+            <br>
+            
+            <dl class="dl-horizontal">
+              <dt>Sposób wysyłki:</dt>
+              <dd>{{ order.shipping_method }}</dd>
+              <dt>Status:</dt>
+              <dd>{{ order.get_status_display }}</dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+              <dt><p>Do zapłaty:</p></dt>
+              <dd><p>{{ order.total }} zł</p></dd>
+            </dl>
+
+            <table class="table table-hover">
+              <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Zdjęcie</th>
+                      <th>Nazwa</th>
+                      <th>Ilość</th>
+                      <th>Cena</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for op in orders_products %}
+                    {% if op.order == order %}
+                      <tr>
+                        <td>{{ op.product.pk }}</td>
+                        <td><a href="{% url 'shop_app:details' op.product.pk %}"><img src="{{ op.product.image.url }}" class="item-cart-img"></a></td>
+                        <td><a href="{% url 'shop_app:details' op.product.pk %}">{{ op.product.name }}</a></td>
+                        <td>{{ op.quantity }}</td>
+                        <td>{{ op.product.price }} zł</td>
+                      </tr>
+                    {% endif%}
+                  {% endfor %}
+                </tbody>
+            </table>
+
+          </div>
+
+        </div>
+
       </div>
 
-    </div>
+    {% endfor %}
+
+  </div>
+
+
 {% endblock %}
