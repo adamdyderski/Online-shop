@@ -23,19 +23,39 @@
         <div id="collapse{{ forloop.counter }}" class="panel-collapse collapse {% if forloop.first %} in {% endif %}" role="tabpanel" aria-labelledby="heading{{ forloop.counter }}">
 
           <div class="panel-body">
-            <br>
-            
-            <dl class="dl-horizontal">
-              <dt>Sposób wysyłki:</dt>
-              <dd>{{ order.shipping_method }}</dd>
-              <dt>Status:</dt>
-              <dd>{{ order.get_status_display }}</dd>
-            </dl>
 
-            <dl class="dl-horizontal">
-              <dt><p>Do zapłaty:</p></dt>
-              <dd><p>{{ order.total }} zł</p></dd>
-            </dl>
+
+
+            <div class="row">
+
+              <div class="col-sm-10 col-sm-offset-1">
+                <h5>Szczegóły zamówienia:</h5>
+                <hr>
+              </div>
+
+              <div class="col-sm-5 col-sm-offset-1">
+                <dl>
+                  <dt>Sposób wysyłki:</dt>
+                  <dd>{{ order.shipping_method.name }}</dd>
+                  <dt>Koszt wysyłki:</dt>
+                  <dd>{{ order.shipping_method.price }} zł</dd>
+                  <dt>Przewidywany czas dostawy:</dt>
+                  <dd>{{ order.shipping_method.days }} dni</dd>
+                </dl>
+              </div>
+
+              <div class="col-sm-5 col-sm-offset-1">
+                <dl>
+                  <dt>Status:</dt>
+                  <dd>{{ order.get_status_display }}</dd>
+                </dl>
+
+                <dl class="order-history-price">
+                  <dt>Do zapłaty:</dt>
+                  <dd>{{ order.total }} zł</dd>
+                </dl>
+              </div>
+            </div>
 
             <table class="table table-hover">
               <thead>
