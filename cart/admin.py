@@ -12,11 +12,14 @@ from .models import *
 #     verbose_name_plural = 'Zamówione produkty'
 
 class OrderAdmin(admin.ModelAdmin):
-    readonly_fields=('user_info','shipping_method','total','products')
+    readonly_fields=('user','user_info','shipping_method','total','products')
+    list_display = ('__str__','user','shipping_method','total','get_status')
+    list_filter = ('shipping_method','status')
+    search_fields = ['id']
 
     fieldsets = (
             (None, {'fields': ('status',)}),
-            ('Dane dostawy:', {'fields': ('user_info',)}),
+            ('Dane dostawy:', {'fields': ('user','user_info',)}),
             ('Dane zamówienia:', {'fields': ('shipping_method','total')}),
             ('Zamówienie:', {'fields': ('products',)}),
     )
