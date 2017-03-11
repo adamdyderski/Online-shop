@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.safestring import mark_safe
 
 class Category(models.Model):
     name = models.CharField(max_length=50, verbose_name="Nazwa kategorii")
@@ -28,3 +29,10 @@ class Product(models.Model):
     def categories(self):
         return ", ".join([c.name for c in self.category.all()])
     categories.short_description = 'Kategorie'
+
+    def thumb(self):
+        if self.pk and self.image:
+            return mark_safe('<img src="%s" width="70"/>' % self.image.url)
+        else:
+            return '-'
+    thumb.short_description = 'Zdjęcie (podgląd)'
