@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
+admin.site.site_header = settings.ADMIN_SITE_HEADER
+
 urlpatterns = [
     url(r'^', include('shop_app.urls')),
     url(r'^accounts/', include('accounts.urls')),

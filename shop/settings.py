@@ -70,7 +70,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'shop_app.context_processors.categories_processor',
-                'cart.context_processors.cart_processor',  
+                'cart.context_processors.cart_processor',
             ],
         },
     },
@@ -146,3 +146,7 @@ DEFAULT_FROM_EMAIL = 'planetofposters@gmail.com'
 
 MEDIA_ROOT = os.path.join( BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# TITLE
+
+ADMIN_SITE_HEADER = "PLANET OF POSTERS  - Strona administracyjna"

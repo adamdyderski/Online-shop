@@ -42,6 +42,9 @@ class Order(models.Model):
         return '{} {}\n{}\n{} {}\n{}'.format(*u)
     user_info.short_description = 'Dane użytkownika'
 
+    def get_status(self):
+        return self.get_status_display()
+    get_status.short_description = 'Status'
 
     def __str__(self):
         return 'Zamówienie nr {}'.format(self.pk)
