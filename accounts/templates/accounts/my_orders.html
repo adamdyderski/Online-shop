@@ -87,7 +87,8 @@
         </div>
 
       </div>
-
+    {% empty %}
+          {% bootstrap_alert "Brak zamówień." alert_type='info' %}
     {% endfor %}
 
   </div>
