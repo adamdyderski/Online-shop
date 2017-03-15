@@ -120,7 +120,7 @@ def order(request):
         if 'shippingmethod' in request.session:
             del request.session['shippingmethod']
 
-        messages.success(request, 'Zamówienie nr ' + str(order.pk) + ' zostało przyjęte do realizacji!')
+        messages.success(request, 'Zamówienie o numerze: ' + str(order.pk) + ' zostało przyjęte do realizacji.')
         return HttpResponseRedirect(reverse_lazy('accounts:orders'))
     else:
         messages.info(request, 'Aby złożyć zamówienie, musisz się zalogować!')
