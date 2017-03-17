@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
 from django.views.generic import TemplateView
+from django.template.loader import render_to_string
 
 from shop_app.models import Product
 from .models import ShippingMethod, Order, OrderProduct
@@ -119,6 +120,10 @@ def order(request):
 
         if 'shippingmethod' in request.session:
             del request.session['shippingmethod']
+
+        # wysłanie maila
+        html_message = render_to_string('cart/order_confirmation.html', { 'order_id': order.pk })
+        request.user.email_user('Zamówienie nr '+ str(order.pk) , '', html_message=html_message)
 
         messages.success(request, 'Zamówienie nr ' + str(order.pk) + ' zostało przyjęte do realizacji!')
         return HttpResponseRedirect(reverse_lazy('accounts:orders'))
