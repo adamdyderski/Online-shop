@@ -57,14 +57,101 @@
 
           <div class="col-sm-4 col-sm-offset-8 text-right">
             <p>Razem: {{ subtotal }} zł</p>
-            <p>Koszt wysyłki: {{ shipping_cost }} zł</p>
+            <p>Koszt wysyłki: {{ shipping_method.price }} zł</p>
             <hr>
             <h5>Do zapłaty: {{ total }} zł</h5>
           </div>
 
-          <div class="col-sm-12 text-right padding-top-md">
-            <a href="{% url 'cart:order' %}" class="btn btn-success">Zamawiam</a>
+
+
+          <div class="col-sm-12 padding-top-md">
+
+            <!-- window -->
+            <div class="text-right">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Dalej</button>
+            </div>
+
+            <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Podsumowanie zamówienia</h4>
+                  </div>
+
+                  <div class="modal-body">
+
+                    <div class="row">
+
+                      <div class="col-sm-6">
+                        <h6>Dane dostawy:</h6>
+                        <hr>
+                        <address>
+                          <strong>{{ request.user.first_name }} {{ request.user.last_name }}</strong><br>
+                          {{ request.user.street }}<br>
+                          {{ request.user.postcode }} {{ request.user.city }}<br>
+                        </address>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <h6>Sposób wysyłki:</h6>
+                        <hr>
+                        {{ shipping_method }}
+                      </div>
+
+                      <div class="col-sm-12 padding-top-md">
+                        <h6>Zamówione produkty:</h6>
+                        <hr>
+                        <div class="table-responsive padding-top-md">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>LP</th>
+                                        <th>ZDJĘCIE</th>
+                                        <th>NAZWA</th>
+                                        <th>ILOŚĆ</th>
+                                        <th>CENA</th>
+                                    </tr>
+                                    </thead>
+                                <tbody>
+                                    {% for product in products %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td><a href="{% url 'shop_app:details' product.pk %}"><img src="{{ product.image.url }}" class="item-cart-img"></a></td>
+                                            <td><a href="{% url 'shop_app:details' product.pk %}">{{ product.name }}</a></td>
+                                            <td class="col-sm-1">{{ cart | get_quantity:product.pk }}</td>
+                                            <td>{{ product.price }} zł</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                      </div>
+
+
+
+                      <div class="col-sm-4 col-sm-offset-8 text-right padding-top-md">
+                        <p>Razem: {{ subtotal }} zł</p>
+                        <p>Koszt wysyłki: {{ shipping_method.price }} zł</p>
+                        <hr>
+                        <h5>Do zapłaty: {{ total }} zł</h5>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                    <a href="{% url 'cart:order' %}" class="btn btn-success" >Zamawiam</a>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
           </div>
+
         </div>
 
       </div>
