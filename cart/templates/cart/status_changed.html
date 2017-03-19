@@ -5,14 +5,15 @@
     <title>Status uległ zmianie</title>
 </head>
 <body>
-    <h2>Status zamówienia nr {{ order_id }} uległ zmianie</h2>
+    <h2>Status zamówienia nr {{ order.pk }} uległ zmianie</h2>
     <p>
-      Status: {{ status }}
+      <span style="font-weight:bold;">Status:</span> {{ order.get_status_display }}
     </p>
+    <br>
     <p>
         Szczegóły oraz aktualny status zamówienia sprawdzisz <a href="{{ link }}">tutaj</a>.
     </p>
-    <br>
+    <p>---</p>
     <p><em>
         Pozdrawiamy,
         <br>

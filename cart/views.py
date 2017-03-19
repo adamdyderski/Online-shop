@@ -109,7 +109,8 @@ def order(request):
             return HttpResponseRedirect(reverse_lazy('cart:show'))
 
         # aktualizacja stanu magazynu
-        for op in OrderProduct.objects.filter(order=order):
+        order_products = OrderProduct.objects.filter(order=order)
+        for op in order_products:
             p = op.product
             p.quantity -= op.quantity
             p.save()
@@ -124,7 +125,7 @@ def order(request):
         # wysłanie maila
         title = 'Zamówienie nr '+ str(order.pk)
         url = request.build_absolute_uri(reverse('accounts:orders'))
-        html_message = render_to_string('cart/order_confirmation.html', { 'order_id': order.pk, 'link': url })
+        html_message = render_to_string('cart/order_confirmation.html', { 'order': order, 'order_products': order_products, 'link': url })
         request.user.email_user(title, '', html_message=html_message)
 
         messages.success(request, 'Zamówienie nr ' + str(order.pk) + ' zostało przyjęte do realizacji!')

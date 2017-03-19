@@ -30,7 +30,7 @@ class OrderAdmin(admin.ModelAdmin):
         if 'status' in form.changed_data:
             title = 'Status zamówienia nr '+ str(obj.pk) +' uległ zmianie'
             url = request.build_absolute_uri(reverse('accounts:orders'))
-            html_message = render_to_string('cart/status_changed.html', { 'order_id': obj.pk, 'link': url, 'status': obj.get_status_display })
+            html_message = render_to_string('cart/status_changed.html', { 'order': obj, 'link': url })
             request.user.email_user(title, '', html_message=html_message)
 
         super(OrderAdmin, self).save_model(request, obj, form, change)
