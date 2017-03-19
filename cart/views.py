@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy,reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
@@ -122,8 +122,10 @@ def order(request):
             del request.session['shippingmethod']
 
         # wysłanie maila
-        html_message = render_to_string('cart/order_confirmation.html', { 'order_id': order.pk })
-        request.user.email_user('Zamówienie nr '+ str(order.pk) , '', html_message=html_message)
+        title = 'Zamówienie nr '+ str(order.pk)
+        url = request.build_absolute_uri(reverse('accounts:orders'))
+        html_message = render_to_string('cart/order_confirmation.html', { 'order_id': order.pk, 'link': url })
+        request.user.email_user(title, '', html_message=html_message)
 
         messages.success(request, 'Zamówienie nr ' + str(order.pk) + ' zostało przyjęte do realizacji!')
         return HttpResponseRedirect(reverse_lazy('accounts:orders'))

@@ -2,10 +2,13 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Potwierdzenie złożenia zamówienia</title>
+    <title>Status uległ zmianie</title>
 </head>
 <body>
-    <h2>Zamówienie nr {{ order_id }} zostało przyjęte do realizacji</h2>
+    <h2>Status zamówienia nr {{ order_id }} uległ zmianie</h2>
+    <p>
+      Status: {{ status }}
+    </p>
     <p>
         Szczegóły oraz aktualny status zamówienia sprawdzisz <a href="{{ link }}">tutaj</a>.
     </p>

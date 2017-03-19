@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import *
-
+from django.template.loader import render_to_string
+from django.core.urlresolvers import reverse_lazy,reverse
 
 
 # class OrderProductInline(admin.TabularInline):
@@ -23,6 +24,16 @@ class OrderAdmin(admin.ModelAdmin):
             ('Dane zamówienia:', {'fields': ('shipping_method','total')}),
             ('Zamówienie:', {'fields': ('products',)}),
     )
+
+    def save_model(self, request, obj, form, change):
+
+        if 'status' in form.changed_data:
+            title = 'Status zamówienia nr '+ str(obj.pk) +' uległ zmianie'
+            url = request.build_absolute_uri(reverse('accounts:orders'))
+            html_message = render_to_string('cart/status_changed.html', { 'order_id': obj.pk, 'link': url, 'status': obj.get_status_display })
+            request.user.email_user(title, '', html_message=html_message)
+
+        super(OrderAdmin, self).save_model(request, obj, form, change)
 
     # inlines = [
     #     OrderProductInline,
