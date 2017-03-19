@@ -24,7 +24,8 @@ class Order(models.Model):
         (3, 'Gotowe do wysyłki'),
         (4, 'Wysłano'),
     )
-    status = models.IntegerField(default=1, choices=STATUS)
+    status = models.IntegerField(default=1, choices=STATUS, verbose_name="Status")
+    date = models.DateTimeField(auto_now_add=True, verbose_name="data")
 
     def products(self):
         products = OrderProduct.objects.filter(order=self.pk)

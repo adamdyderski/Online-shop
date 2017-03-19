@@ -13,15 +13,15 @@ from django.core.urlresolvers import reverse_lazy,reverse
 #     verbose_name_plural = 'Zamówione produkty'
 
 class OrderAdmin(admin.ModelAdmin):
-    readonly_fields=('user','user_info','shipping_method','total','products')
-    list_display = ('__str__','user','shipping_method','total','get_status')
-    list_filter = ('shipping_method','status')
+    readonly_fields=('user','user_info','shipping_method','total','products','date')
+    list_display = ('__str__','user','shipping_method','total','get_status','date')
+    list_filter = ('shipping_method','status','date')
     search_fields = ['id']
 
     fieldsets = (
             (None, {'fields': ('status',)}),
             ('Dane dostawy:', {'fields': ('user','user_info',)}),
-            ('Dane zamówienia:', {'fields': ('shipping_method','total')}),
+            ('Dane zamówienia:', {'fields': ('shipping_method','total','date')}),
             ('Zamówienie:', {'fields': ('products',)}),
     )
 
