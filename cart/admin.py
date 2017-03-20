@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import *
-
+from django.template.loader import render_to_string
+from django.core.urlresolvers import reverse_lazy,reverse
 
 
 # class OrderProductInline(admin.TabularInline):
@@ -12,17 +13,27 @@ from .models import *
 #     verbose_name_plural = 'Zamówione produkty'
 
 class OrderAdmin(admin.ModelAdmin):
-    readonly_fields=('user','user_info','shipping_method','total','products')
-    list_display = ('__str__','user','shipping_method','total','get_status')
-    list_filter = ('shipping_method','status')
+    readonly_fields=('user','user_info','shipping_method','total','products','date')
+    list_display = ('__str__','user','shipping_method','total','get_status','date')
+    list_filter = ('shipping_method','status','date')
     search_fields = ['id']
 
     fieldsets = (
             (None, {'fields': ('status',)}),
             ('Dane dostawy:', {'fields': ('user','user_info',)}),
-            ('Dane zamówienia:', {'fields': ('shipping_method','total')}),
+            ('Dane zamówienia:', {'fields': ('shipping_method','total','date')}),
             ('Zamówienie:', {'fields': ('products',)}),
     )
+
+    def save_model(self, request, obj, form, change):
+
+        if 'status' in form.changed_data:
+            title = 'Status zamówienia nr '+ str(obj.pk) +' uległ zmianie'
+            url = request.build_absolute_uri(reverse('accounts:orders'))
+            html_message = render_to_string('cart/status_changed.html', { 'order': obj, 'link': url })
+            request.user.email_user(title, '', html_message=html_message)
+
+        super(OrderAdmin, self).save_model(request, obj, form, change)
 
     # inlines = [
     #     OrderProductInline,

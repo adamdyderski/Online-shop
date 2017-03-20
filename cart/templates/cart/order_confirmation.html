@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Potwierdzenie złożenia zamówienia</title>
+</head>
+<body>
+    <h2>Potwierdzenie zamówienia nr {{ order.pk }}</h2>
+    <br>
+    <table width="500px" style="text-align:center;" cellspacing="5">
+        <thead>
+            <tr>
+                <th>LP</th>
+                <th>NAZWA</th>
+                <th>ILOŚĆ</th>
+                <th>CENA</th>
+            </tr>
+            </thead>
+        <tbody>
+            {% for op in order_products %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ op.product.name }}</td>
+                    <td>{{ op.quantity }}</td>
+                    <td>{{ op.product.price }} zł</td>
+                </tr>
+            {% endfor %}
+            <tr>
+              <td colspan="3" style="text-align:right">Koszt wysyłki:</td>
+              <td>{{ order.shipping_method.price }} zł</td>
+            </tr>
+            <tr>
+              <td colspan="3" style="text-align:right; font-weight:bold;">RAZEM:</td>
+              <td style="font-weight:bold;">{{ order.total }} zł</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+      <span style="font-weight:bold;">Sposób wysyłki:</span> {{ order.shipping_method.name }}
+    </p>
+    <p>
+      <span style="font-weight:bold;">Przewidywany czas dostawy:</span> {{ order.shipping_method.days }} dni
+    </p>
+    <p>
+      <span style="font-weight:bold;">Status:</span> {{ order.get_status_display }}
+    </p>
+    <br>
+    <p>
+        Szczegóły oraz aktualny status zamówienia sprawdzisz <a href="{{ link }}">tutaj</a>.
+    </p>
+    <p>---</p>
+    <p><em>
+        Pozdrawiamy,
+        <br>
+        Zespół Planet Of Posters
+        </em>
+    </p>
+</body>
+</html>

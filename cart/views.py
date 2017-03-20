@@ -1,9 +1,10 @@
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy,reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
 from django.views.generic import TemplateView
+from django.template.loader import render_to_string
 
 from shop_app.models import Product
 from .models import ShippingMethod, Order, OrderProduct
@@ -48,23 +49,23 @@ class ShowCart(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ShowCart, self).get_context_data(**kwargs)
         context['shippingmethodform'] = ShippingMethodForm(self.request)
+        context['shipping_method'] = self.shipping_method = self.get_shipping_object();
         context['cart'] = self.cart = self.request.session.get('cart', {})
         context['products'] = self.products = self.get_cart_products()
-        context['shipping_cost'] = self.shipping_cost = self.get_shipping_cost()
         context['subtotal'], context['total'] = self.get_cart_price()
         return context
 
     def get_cart_price(self, subtotal = 0):
         for product in self.products:
             subtotal += product.price * self.cart[str(product.pk)]
-        total = subtotal + self.shipping_cost
+        total = subtotal + self.shipping_method.price
         self.request.session['total'] = str(total)
         return subtotal, total
 
-    def get_shipping_cost(self):
+    def get_shipping_object(self):
         shipping_method_pk = int(self.request.session.get('shippingmethod', 1))
-        shipping_method = ShippingMethod.objects.get(pk=shipping_method_pk)
-        return shipping_method.price
+        shipping_method_obj = ShippingMethod.objects.get(pk=shipping_method_pk)
+        return shipping_method_obj
 
     def get_cart_products(self):
         return Product.objects.filter(pk__in=self.cart)
@@ -108,7 +109,8 @@ def order(request):
             return HttpResponseRedirect(reverse_lazy('cart:show'))
 
         # aktualizacja stanu magazynu
-        for op in OrderProduct.objects.filter(order=order):
+        order_products = OrderProduct.objects.filter(order=order)
+        for op in order_products:
             p = op.product
             p.quantity -= op.quantity
             p.save()
@@ -119,6 +121,12 @@ def order(request):
 
         if 'shippingmethod' in request.session:
             del request.session['shippingmethod']
+
+        # wysłanie maila
+        title = 'Zamówienie nr '+ str(order.pk)
+        url = request.build_absolute_uri(reverse('accounts:orders'))
+        html_message = render_to_string('cart/order_confirmation.html', { 'order': order, 'order_products': order_products, 'link': url })
+        request.user.email_user(title, '', html_message=html_message)
 
         messages.success(request, 'Zamówienie nr ' + str(order.pk) + ' zostało przyjęte do realizacji!')
         return HttpResponseRedirect(reverse_lazy('accounts:orders'))
