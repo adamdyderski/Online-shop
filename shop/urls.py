@@ -23,6 +23,7 @@ admin.site.site_header = settings.ADMIN_SITE_HEADER
 urlpatterns = [
     url(r'^', include('shop_app.urls')),
     url(r'^accounts/', include('accounts.urls')),
+    url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^cart/', include('cart.urls')),
     url(r'^admin/', admin.site.urls),
 ]
