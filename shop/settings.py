@@ -32,15 +32,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'shop_app.apps.ShopAppConfig',
+    'accounts.apps.AccountsConfig',
+    'cart.apps.CartConfig',
     'django.contrib.auth',
     'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'shop_app.apps.ShopAppConfig',
-    'accounts.apps.AccountsConfig',
-    'cart.apps.CartConfig',
     'bootstrap3',
 ]
 
@@ -62,7 +62,7 @@ ROOT_URLCONF = 'shop.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['./accounts/templates'],
+        'DIRS': [''],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
