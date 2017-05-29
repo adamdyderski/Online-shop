@@ -15,7 +15,7 @@ from cart.models import Order, OrderProduct
 
 class UserUpdate(SuccessMessageMixin, UpdateView):
     model = User
-    fields = ['first_name','last_name', 'street', 'postcode', 'city', 'email' ,'phone']
+    fields = ['street', 'postcode', 'city', 'email' ,'phone']
     template_name_suffix = '_update_form'
     success_message = 'Twoje dane zostały zaktualizowane!'
 

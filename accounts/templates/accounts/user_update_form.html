@@ -13,11 +13,9 @@
                 {% bootstrap_messages %}
             </div>
 
-            <div class="col-sm-6 col-sm-offset-3">  
-                <h6>Twoje dane:</h6>
+            <div class="col-sm-6 col-sm-offset-3">
+                <h6>Dane kontaktowe:</h6>
                 <p>
-                    {% bootstrap_field form.first_name layout='horizontal' %}
-                    {% bootstrap_field form.last_name  layout='horizontal'%}
                     {% bootstrap_field form.email layout='horizontal'%}
                     {% bootstrap_field form.phone  layout='horizontal'%}
                 </p>
@@ -33,9 +31,9 @@
                 <p>
                     {% bootstrap_button "Zapisz" button_type="submit" button_class="btn-primary" %}
                 </p>
-            </div> 
+            </div>
 
         </div>
-    </form> 
+    </form>
 
 {% endblock %}
