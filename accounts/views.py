@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.views.generic.edit import UpdateView, View
 from django.views.generic import TemplateView
+from django.urls import reverse
 
 from accounts.forms import RegistrationFrom
 from accounts.models import User
@@ -21,6 +22,9 @@ class UserUpdate(SuccessMessageMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+    def get_success_url(self):
+        return reverse('accounts:profile')
 
 
 def activate(request, activation_key):

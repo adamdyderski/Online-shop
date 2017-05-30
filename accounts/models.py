@@ -3,7 +3,6 @@ import uuid
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db import models
-from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 # walidacja
@@ -17,6 +16,3 @@ class User(AbstractUser):
     city = models.CharField(max_length=50, verbose_name="Miasto")
     phone = models.CharField(max_length=20, verbose_name="Telefon", validators=[phone_validator])
     activation_key = models.UUIDField(default=uuid.uuid1, unique=True, editable=False)
-
-    def get_absolute_url(self):
-        return reverse('accounts:profile')
