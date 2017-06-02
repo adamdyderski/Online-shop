@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy,reverse
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
 from django.views import View
 from django.views.generic import TemplateView
 from django.template.loader import render_to_string
@@ -13,32 +12,25 @@ from .forms import ShippingMethodForm
 
 
 def add_or_update(request, product_pk):
-    if request.method == 'POST':
-        cart = request.session.get('cart', {})
-        product = get_object_or_404(Product, pk=product_pk)
-        add_quantity = int(request.POST.get("quantity", 1))
 
-        if product.quantity < add_quantity:
-            messages.info(request, 'Niestety, obecnie dostępnych sztuk: ' + str(product.quantity))
-        elif add_quantity > 0 :
-            if product_pk in cart:
-                messages.success(request, 'Zaktualizowano koszyk!')
-            else:
-                messages.success(request, 'Dodano do koszyka!')
-            cart[str(product.pk)] = add_quantity
-            request.session['cart'] = cart
+    if request.method == 'POST':
+        quantity = request.POST.get('quantity', 1)
+        cart = Cart(request)
+        success, message = cart.add_or_update(product_pk, int(quantity))
+
+        if success:
+            messages.success(request, message)
         else:
-            messages.info(request, 'Podają poprawną ilość większą niż 0.')
+            messages.info(request, message)
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def remove(request, product_pk):
-    cart = request.session.get('cart', {})
+    cart = Cart(request)
 
-    if product_pk in cart:
-        del cart[product_pk]
-        request.session['cart'] = cart
+    if product_pk in cart.session_cart:
+        cart.remove(product_pk)
         messages.success(request, 'Usunięto z koszyka!')
 
     return HttpResponseRedirect(reverse_lazy('cart:show'))

@@ -1,5 +1,6 @@
 from .models import ShippingMethod, Product
 from decimal import Decimal
+from django.shortcuts import get_object_or_404
 
 class Cart(object):
 
@@ -32,10 +33,25 @@ class Cart(object):
         self.session_shipping_method = value
         self.save()
 
-    def add_to_cart(self, pk, quantity):
-        product = get_object_or_404(Product, pk=product_pk)
+    def add_or_update(self, pk, quantity):
+        product = get_object_or_404(Product, pk=pk)
+
+        if quantity <= 0:
+            success, message = False, 'Podają poprawną ilość większą niż 0.'
+        elif product.quantity < quantity:
+            success, message = False, 'Niestety, obecnie dostępnych sztuk: ' + str(product.quantity)
+        elif pk in self.session_cart:
+            success, message = True, 'Zaktualizowano koszyk!'
+        else:
+            success, message = True, 'Dodano do koszyka!'
+
         self.session_cart[str(pk)] = int(quantity)
-        self.session['cart'] = session_cart
+        self.save()
+
+        return success, message
+
+    def remove(self, pk):
+        del self.session_cart[pk]
         self.save()
 
     def save(self):
