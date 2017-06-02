@@ -6,10 +6,11 @@ from django.views import View
 from django.views.generic import TemplateView
 from django.template.loader import render_to_string
 
+from .cart import Cart
 from shop_app.models import Product
 from .models import ShippingMethod, Order, OrderProduct
 from .forms import ShippingMethodForm
-from decimal import Decimal
+
 
 def add_or_update(request, product_pk):
     if request.method == 'POST':
@@ -49,31 +50,16 @@ class ShowCart(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ShowCart, self).get_context_data(**kwargs)
         context['shippingmethodform'] = ShippingMethodForm(self.request)
-        context['shipping_method'] = self.shipping_method = self.get_shipping_object();
-        context['cart'] = self.cart = self.request.session.get('cart', {})
-        context['products'] = self.products = self.get_cart_products()
-        context['subtotal'], context['total'] = self.get_cart_price()
+        context['cart'] = Cart(self.request)
         return context
-
-    def get_cart_price(self, subtotal = 0):
-        for product in self.products:
-            subtotal += product.price * self.cart[str(product.pk)]
-        total = subtotal + self.shipping_method.price
-        self.request.session['total'] = str(total)
-        return subtotal, total
-
-    def get_shipping_object(self):
-        shipping_method_pk = int(self.request.session.get('shippingmethod', 1))
-        shipping_method_obj = ShippingMethod.objects.get(pk=shipping_method_pk)
-        return shipping_method_obj
-
-    def get_cart_products(self):
-        return Product.objects.filter(pk__in=self.cart)
 
 
 def set_shipping_method(request):
+
     if request.method == 'POST':
-        request.session['shippingmethod'] = int(request.POST.get("shippingmethod", 1))
+        value = request.POST.get("shippingmethod", 1)
+        cart = Cart(request)
+        cart.set_shipping_method(value)
         messages.success(request, 'Sposób wysyłki został zmieniony!')
 
     return HttpResponseRedirect(reverse_lazy('cart:show'))
@@ -82,21 +68,20 @@ def set_shipping_method(request):
 def order(request):
 
     if request.user.is_authenticated():
+
         # dane z koszyka
-        cart = request.session.get('cart', {})
-        total = request.session.get('total', 0)
-        shipping_method_pk = int(request.session.get('shippingmethod', 1))
+        cart = Cart(request)
 
         # nowe zamównienie
         order = Order()
         order.user = request.user
-        order.shipping_method = ShippingMethod.objects.get(pk=shipping_method_pk)
-        order.total = Decimal(request.session.get('total'))
+        order.shipping_method = ShippingMethod.objects.get(pk=cart.shipping_method.pk)
+        order.total = cart.get_total_price()
         order.save()
 
         # produkty do zamówienia
         try:
-            for key, value in cart.items():
+            for key, value in cart.session_cart.items():
                 op = OrderProduct()
                 op.order = order
                 op.product = Product.objects.get(pk=int(key))
@@ -117,7 +102,6 @@ def order(request):
 
         # wyczyszczenie sesji
         del request.session['cart']
-        del request.session['total']
 
         if 'shippingmethod' in request.session:
             del request.session['shippingmethod']

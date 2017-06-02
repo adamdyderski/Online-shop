@@ -8,7 +8,7 @@
     <hr>
     {% bootstrap_messages %}
 
-    {% if products %}
+    {% if cart.products %}
 
         <div class="table-responsive">
             <table class="table table-hover">
@@ -23,7 +23,7 @@
                     </tr>
                     </thead>
                 <tbody>
-                    {% for product in products %}
+                    {% for product in cart.products %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
                             <td><a href="{% url 'shop_app:details' product.pk %}"><img src="{{ product.image.url }}" class="item-cart-img"></a></td>
@@ -31,7 +31,7 @@
                             <td class="col-sm-1">
                                 <form method="post" action="{% url 'cart:update' product.pk %}" class="form-horizontal">
                                     {% csrf_token %}
-                                    <input type="number" name="quantity" value="{{ cart | get_quantity:product.pk }}" min="1" class="form-control" onchange="this.form.submit()">
+                                    <input type="number" name="quantity" value="{{ cart.session_cart | get_quantity:product.pk }}" min="1" class="form-control" onchange="this.form.submit()">
                                 </form>
                             </td>
                             <td>{{ product.price }} zł</td>
@@ -56,10 +56,10 @@
           <div class="clearfix"></div>
 
           <div class="col-sm-4 col-sm-offset-8 text-right">
-            <p>Razem: {{ subtotal }} zł</p>
-            <p>Koszt wysyłki: {{ shipping_method.price }} zł</p>
+            <p>Razem: {{ cart.get_subtotal_price }} zł</p>
+            <p>Koszt wysyłki: {{ cart.shipping_method.price }} zł</p>
             <hr>
-            <h5>Do zapłaty: {{ total }} zł</h5>
+            <h5>Do zapłaty: {{ cart.get_total_price }} zł</h5>
           </div>
 
 
@@ -101,7 +101,7 @@
                       <div class="col-sm-6">
                         <h6>Sposób wysyłki:</h6>
                         <hr>
-                        {{ shipping_method }}
+                        {{ cart.shipping_method }}
                       </div>
 
                       <div class="col-sm-12 padding-top-md">
@@ -119,12 +119,12 @@
                                     </tr>
                                     </thead>
                                 <tbody>
-                                    {% for product in products %}
+                                    {% for product in cart.products %}
                                         <tr>
                                             <td>{{ forloop.counter }}</td>
                                             <td><a href="{% url 'shop_app:details' product.pk %}"><img src="{{ product.image.url }}" class="item-cart-img"></a></td>
                                             <td><a href="{% url 'shop_app:details' product.pk %}">{{ product.name }}</a></td>
-                                            <td class="col-sm-1">{{ cart | get_quantity:product.pk }}</td>
+                                            <td class="col-sm-1">{{ cart.session_cart | get_quantity:product.pk }}</td>
                                             <td>{{ product.price }} zł</td>
                                         </tr>
                                     {% endfor %}
@@ -136,10 +136,10 @@
 
 
                       <div class="col-sm-4 col-sm-offset-8 text-right padding-top-md">
-                        <p>Razem: {{ subtotal }} zł</p>
-                        <p>Koszt wysyłki: {{ shipping_method.price }} zł</p>
+                        <p>Razem: {{ cart.get_subtotal_price }} zł</p>
+                        <p>Koszt wysyłki: {{ cart.shipping_method.price }} zł</p>
                         <hr>
-                        <h5>Do zapłaty: {{ total }} zł</h5>
+                        <h5>Do zapłaty: {{ cart.get_total_price }} zł</h5>
                       </div>
 
                     </div>
