@@ -57,7 +57,7 @@ def set_shipping_method(request):
     return HttpResponseRedirect(reverse_lazy('cart:show'))
 
 
-def order(request):
+def order_create(request):
 
     if request.user.is_authenticated():
 

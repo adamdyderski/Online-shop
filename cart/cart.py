@@ -12,6 +12,7 @@ class Cart(object):
         self.session = request.session
         self.session_cart = self.session.get('cart', {})
         self.session_shipping_method = self.session.get('shippingmethod', 1)
+        
         # obiekty
         self.products = Product.objects.filter(pk__in=self.session_cart)
         self.shipping_method = ShippingMethod.objects.get(pk=int(self.session_shipping_method))
@@ -30,10 +31,16 @@ class Cart(object):
         return Decimal(self.get_subtotal_price() + self.shipping_method.price)
 
     def set_shipping_method(self, value):
+        """
+        Sposób wysyłki
+        """
         self.session_shipping_method = value
         self.save()
 
     def add_or_update(self, pk, quantity):
+        """
+        Dodawanie oraz aktualizacja produktów w koszyku
+        """
         product = get_object_or_404(Product, pk=pk)
 
         if quantity <= 0:
@@ -51,10 +58,16 @@ class Cart(object):
         return success, message
 
     def remove(self, pk):
+        """
+        Usuwanie z koszyka
+        """
         del self.session_cart[pk]
         self.save()
 
     def save(self):
+        """
+        Zapisywanie
+        """
         self.session['cart'] = self.session_cart
         self.session['shippingmethod'] = self.session_shipping_method
         self.session.modified = True
