@@ -12,10 +12,17 @@ class Cart(object):
         self.session = request.session
         self.session_cart = self.session.get('cart', {})
         self.session_shipping_method = self.session.get('shippingmethod', 1)
-        
+
         # obiekty
         self.products = Product.objects.filter(pk__in=self.session_cart)
         self.shipping_method = ShippingMethod.objects.get(pk=int(self.session_shipping_method))
+
+    def __iter__(self):
+        """
+        Przeglądnięcie koszyka
+        """
+        for product in self.products:
+            yield product, self.session_cart[str(product.pk)]
 
     def get_subtotal_price(self):
         """

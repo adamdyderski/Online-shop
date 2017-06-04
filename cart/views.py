@@ -73,11 +73,8 @@ def order_create(request):
 
         # produkty do zamówienia
         try:
-            for key, value in cart.session_cart.items():
-                op = OrderProduct()
-                op.order = order
-                op.product = Product.objects.get(pk=int(key))
-                op.quantity = value
+            for product, quantity in cart:
+                op = OrderProduct(order=order, product=product, quantity=quantity)
                 op.clean()
                 op.save()
         except Exception as e:
