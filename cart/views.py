@@ -65,10 +65,7 @@ def order_create(request):
         cart = Cart(request)
 
         # nowe zamównienie
-        order = Order()
-        order.user = request.user
-        order.shipping_method = ShippingMethod.objects.get(pk=cart.shipping_method.pk)
-        order.total = cart.get_total_price()
+        order = Order(user=request.user, total=cart.get_total_price(), shipping_method=cart.shipping_method)
         order.save()
 
         # produkty do zamówienia
@@ -83,11 +80,9 @@ def order_create(request):
             return HttpResponseRedirect(reverse_lazy('cart:show'))
 
         # aktualizacja stanu magazynu
-        order_products = OrderProduct.objects.filter(order=order)
-        for op in order_products:
-            p = op.product
-            p.quantity -= op.quantity
-            p.save()
+        for product, quantity in cart:
+            product.quantity -= quantity
+            product.save()
 
         # wyczyszczenie sesji
         del request.session['cart']
@@ -98,7 +93,7 @@ def order_create(request):
         # wysłanie maila
         title = 'Zamówienie nr '+ str(order.pk)
         url = request.build_absolute_uri(reverse('accounts:orders'))
-        html_message = render_to_string('cart/order_confirmation.html', { 'order': order, 'order_products': order_products, 'link': url })
+        html_message = render_to_string('cart/order_confirmation.html', { 'order': order, 'order_products': OrderProduct.objects.filter(order=order), 'link': url })
         request.user.email_user(title, '', html_message=html_message)
 
         messages.success(request, 'Zamówienie nr ' + str(order.pk) + ' zostało przyjęte do realizacji!')

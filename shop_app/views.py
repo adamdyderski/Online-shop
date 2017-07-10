@@ -21,8 +21,8 @@ class List(ListView):
 
     def get_random_products(self, n):
         return self.model.objects.filter(quantity__gt=0).order_by('?')[:n]
-    
-    def get_title(self, title="Wszystkie"):     
+
+    def get_title(self, title="Wszystkie"):
         if self.kwargs.get('category_pk'):
             c = Category.objects.get(id=self.kwargs['category_pk'])
             title = 'Kategoria: {}'.format(c)
@@ -40,12 +40,3 @@ class Details(DetailView, FormMixin):
     model = Product
     template_name = "shop_app/product_details.html"
     form_class = AddToCartForm
-
-    def availability(self):
-        q = self.object.quantity
-        return 'brak' if q == 0 else 'na wyczerpaniu' if q < 5 else 'dostępny'  
-
-    def get_context_data(self, **kwargs):
-        context = super(Details, self).get_context_data(**kwargs)
-        context['availability'] = self.availability()
-        return context

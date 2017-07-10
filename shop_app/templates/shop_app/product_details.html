@@ -1,5 +1,6 @@
 {% extends 'shop_app/base.html' %}
 {% load bootstrap3 %}
+{% load quantity_text %}
 
 {% block body %}
 
@@ -30,7 +31,7 @@
             </div>
 
             <div class="col-sm-9">
-                {{ availability }}
+                {{ product.quantity | quantity_to_text }}
             </div>
 
             <div class="col-sm-3">
