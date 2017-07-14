@@ -4,14 +4,6 @@ from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse_lazy,reverse
 
 
-# class OrderProductInline(admin.TabularInline):
-#     readonly_fields = ['product','product','quantity']
-#     model = OrderProduct
-#     extra = 0
-#     can_delete = False
-#     verbose_name = 'Zamówiony Produkt'
-#     verbose_name_plural = 'Zamówione produkty'
-
 class OrderAdmin(admin.ModelAdmin):
     readonly_fields=('user','user_info','shipping_method','total','products','date')
     list_display = ('__str__','user','shipping_method','total','get_status','date')
@@ -34,10 +26,6 @@ class OrderAdmin(admin.ModelAdmin):
             request.user.email_user(title, '', html_message=html_message)
 
         super(OrderAdmin, self).save_model(request, obj, form, change)
-
-    # inlines = [
-    #     OrderProductInline,
-    # ]
 
 class ShippingMethodAdmin(admin.ModelAdmin):
     list_display = ('name','price','days')
