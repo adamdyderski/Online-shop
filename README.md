@@ -4,13 +4,18 @@ Online shop application created in Django framework.
 
 ## Screenshots
 
-![alt text](http://ux.up.krakow.pl/~adwody/github/git1.png)
+![Home page](http://ux.up.krakow.pl/~adwody/github/git1.png?style=centerme)
 
 
-![alt text](http://ux.up.krakow.pl/~adwody/github/git2.png)
+![Product page](http://ux.up.krakow.pl/~adwody/github/git2.png?style=centerme)
 
 
-![alt text](http://ux.up.krakow.pl/~adwody/github/git3.png)
+![Cart page](http://ux.up.krakow.pl/~adwody/github/git3.png?style=centerme)
 
 
-![alt text](http://ux.up.krakow.pl/~adwody/github/git4.png)
+![Admin panel](http://ux.up.krakow.pl/~adwody/github/git4.png?style=centerme)
+
+img[src$="centerme"] {
+  display:block;
+  margin: 0 auto;
+}
