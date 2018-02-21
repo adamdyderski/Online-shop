@@ -1,3 +1,8 @@
+img[src$="centerme"] {
+  display:block;
+  margin: 0 auto;
+}
+
 # Online shop app
 
 Online shop application created in Django framework.
@@ -15,7 +20,4 @@ Online shop application created in Django framework.
 
 ![Admin panel](http://ux.up.krakow.pl/~adwody/github/git4.png?style=centerme)
 
-img[src$="centerme"] {
-  display:block;
-  margin: 0 auto;
-}
+
